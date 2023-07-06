@@ -1,7 +1,6 @@
 package tunnel
 
 import (
-	"errors"
 	"strings"
 
 	"net/http"
@@ -40,9 +39,9 @@ func NewTunnel(port int, dest, telerOpts, optFormat string) (*Tunnel, error) {
 		case "json":
 			opt, err = option.LoadFromJSONString(telerOpts)
 		case "":
-			return nil, errors.New("undefined teler option format")
+			return nil, errTelerOptFormatUnd
 		default:
-			return nil, errors.New("invalid teler option format")
+			return nil, errTelerOptFormatInv
 		}
 
 		if err != nil {
