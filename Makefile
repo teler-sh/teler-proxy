@@ -18,7 +18,7 @@ report:
 build:
 	@echo "Building binary"
 	@mkdir -p bin/
-	go build -ldflags "-s -w -X github.com/kitabisa/teler-proxy/common.Version=${VERSION}" -o ./bin/${APP_NAME} ./cmd/${APP_NAME}
+	CGO_ENABLED="1" go build -ldflags "-s -w -X github.com/kitabisa/teler-proxy/common.Version=${VERSION}" -o ./bin/${APP_NAME} ./cmd/${APP_NAME}
 
 clean:
 	@echo "Removing binaries"
