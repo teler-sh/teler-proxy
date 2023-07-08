@@ -7,18 +7,18 @@ import (
 	"net/http/httputil"
 	"net/url"
 
+	"github.com/kitabisa/teler-proxy/common"
 	"github.com/kitabisa/teler-waf"
 	"github.com/kitabisa/teler-waf/option"
 )
 
 type Tunnel struct {
 	*teler.Teler
-	LocalPort    int
-	Destination  string
 	ReverseProxy *httputil.ReverseProxy
 }
 
-func NewTunnel(port int, dest, telerOpts, optFormat string) (*Tunnel, error) {
+func NewTunnel(port int, dest, cfgPath, optFormat string) (*Tunnel, error) {
+	dest = "http://" + dest
 	destURL, err := url.Parse(dest)
 	if err != nil {
 		return nil, err
@@ -26,22 +26,23 @@ func NewTunnel(port int, dest, telerOpts, optFormat string) (*Tunnel, error) {
 
 	var opt teler.Options
 
+	if dest == "" {
+		return nil, common.ErrDestAddressEmpty
+	}
+
 	tun := &Tunnel{}
-	tun.Teler = teler.New()
-	tun.LocalPort = port
-	tun.Destination = dest
 	tun.ReverseProxy = httputil.NewSingleHostReverseProxy(destURL)
 
-	if telerOpts != "" {
+	if cfgPath != "" {
 		switch strings.ToLower(optFormat) {
 		case "yaml":
-			opt, err = option.LoadFromYAMLString(telerOpts)
+			opt, err = option.LoadFromYAMLFile(cfgPath)
 		case "json":
-			opt, err = option.LoadFromJSONString(telerOpts)
+			opt, err = option.LoadFromJSONFile(cfgPath)
 		case "":
-			return nil, errTelerOptFormatUnd
+			return nil, common.ErrCfgFileFormatUnd
 		default:
-			return nil, errTelerOptFormatInv
+			return nil, common.ErrCfgFileFormatInv
 		}
 
 		if err != nil {
@@ -49,15 +50,13 @@ func NewTunnel(port int, dest, telerOpts, optFormat string) (*Tunnel, error) {
 		}
 
 		tun.Teler = teler.New(opt)
+	} else {
+		tun.Teler = teler.New()
 	}
 
 	return tun, nil
 }
 
 func (t *Tunnel) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	if err := t.Teler.Analyze(w, r); err != nil {
-		return
-	}
-
-	t.ReverseProxy.ServeHTTP(w, r)
+	t.Teler.HandlerFuncWithNext(w, r, t.ReverseProxy.ServeHTTP)
 }
