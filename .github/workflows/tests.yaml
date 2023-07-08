@@ -1,0 +1,45 @@
+name: "Tests"
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "**.go"
+      - "go.mod"
+  pull_request:
+    branches:
+      - "**"
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: 'stable'
+      - uses: actions/checkout@v3
+      - name: Vetting
+        run: make vet
+
+  golangci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v2
+        with:
+          args: --timeout=5m
+        
+  semgrep:
+    runs-on: ubuntu-latest
+    container:
+      image: returntocorp/semgrep
+    if: (github.actor != 'dependabot[bot]')
+    steps:
+      - uses: actions/checkout@v3
+      - run: semgrep ci
+        env:
+           SEMGREP_RULES: auto
+

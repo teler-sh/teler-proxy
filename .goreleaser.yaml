@@ -1,0 +1,18 @@
+builds:
+  - binary: teler-proxy
+    main: cmd/teler-proxy/main.go
+    ldflags:
+      - -s -w -X github.com/kitabisa/teler-proxy/common.Version=v{{.Version}}
+    goos:
+      - linux
+      - windows
+      - darwin
+    goarch:
+      - amd64
+      - 386
+      - arm
+      - arm64
+  
+archives:
+  - id: binary
+    format: binary
