@@ -1,2 +1,5 @@
 bin/*
 dist/*
+/teler-proxy
+*.yaml
+*.json
