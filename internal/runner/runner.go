@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"os"
+	"sync"
 	"syscall"
 	"time"
 
@@ -20,6 +21,9 @@ type Runner struct {
 	*common.Options
 	*fsnotify.Watcher
 	*http.Server
+
+	shuttingDown bool
+	shutdownLock sync.Mutex
 }
 
 func New(opt *common.Options) error {
@@ -90,6 +94,16 @@ func (r *Runner) start() error {
 }
 
 func (r *Runner) shutdown() error {
+	r.shutdownLock.Lock()
+	defer r.shutdownLock.Unlock()
+
+	if r.shuttingDown {
+		return nil
+	}
+	r.shuttingDown = true
+
+	log.Info("Gracefully shutdown...")
+
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
@@ -111,7 +125,6 @@ func (r *Runner) notify(sigCh chan os.Signal) error {
 
 	switch sig {
 	case syscall.SIGINT, syscall.SIGTERM:
-		log.Info("Gracefully shutdown...")
 		return r.shutdown()
 	case syscall.SIGHUP, syscall.SIGUSR1:
 		return r.restart()
