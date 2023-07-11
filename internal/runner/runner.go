@@ -15,6 +15,11 @@ import (
 )
 
 func New(opt *common.Options) error {
+	reachable := isReachable(opt.Destination, 5*time.Second)
+	if !reachable {
+		return errDestUnreachable
+	}
+
 	tun, err := tunnel.NewTunnel(opt.Port, opt.Destination, opt.Config.Path, opt.Config.Format)
 	if err != nil {
 		return err
