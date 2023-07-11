@@ -4,7 +4,7 @@ go 1.19
 
 require (
 	github.com/charmbracelet/log v0.2.2
-	github.com/kitabisa/teler-waf v1.0.2
+	github.com/kitabisa/teler-waf v1.0.3
 )
 
 require (
@@ -19,6 +19,7 @@ require (
 	github.com/aymerick/douceur v0.2.0 // indirect
 	github.com/bgentry/go-netrc v0.0.0-20140422174119-9fd32a8b3d3d // indirect
 	github.com/charmbracelet/lipgloss v0.7.1 // indirect
+	github.com/dwisiswant0/clientip v0.3.0 // indirect
 	github.com/gabriel-vasile/mimetype v1.4.2 // indirect
 	github.com/go-logfmt/logfmt v0.6.0 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
