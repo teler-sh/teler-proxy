@@ -43,7 +43,11 @@ func New(opt *common.Options) error {
 		run.Watcher = watcher
 		defer run.Watcher.Close()
 
-		go run.watch()
+		go func() {
+			if err := run.watch(); err != nil {
+				log.Fatal("Something went wrong", "err", err)
+			}
+		}()
 	}
 
 	tun, err := tunnel.NewTunnel(opt.Port, opt.Destination, opt.Config.Path, opt.Config.Format)
