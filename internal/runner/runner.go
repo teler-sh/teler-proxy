@@ -83,9 +83,25 @@ func New(opt *common.Options) error {
 }
 
 func (r *Runner) start() error {
-	log.Info("Server started", "port", r.Options.Port, "pid", os.Getpid())
+	var err error
 
-	err := r.Server.ListenAndServe()
+	cert := r.Options.TLS.CertPath
+	key := r.Options.TLS.KeyPath
+	tls := (cert != "" && key != "")
+
+	log.Info(
+		"Server started!",
+		"port", r.Options.Port,
+		"tls", tls,
+		"pid", os.Getpid(),
+	)
+
+	if tls {
+		err = r.Server.ListenAndServeTLS(cert, key)
+	} else {
+		err = r.Server.ListenAndServe()
+	}
+
 	if err != nil && err != http.ErrServerClosed {
 		return err
 	}
@@ -111,7 +127,7 @@ func (r *Runner) shutdown() error {
 }
 
 func (r *Runner) restart() error {
-	log.Info("Restarting server...")
+	log.Info("Restarting...")
 
 	if err := r.shutdown(); err != nil {
 		return err

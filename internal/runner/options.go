@@ -10,6 +10,7 @@ import (
 func ParseOptions() *common.Options {
 	opt := &common.Options{}
 	cfg := &common.Config{}
+	tls := &common.TLS{}
 
 	flag.IntVar(&opt.Port, "p", 1337, "")
 	flag.IntVar(&opt.Port, "port", 1337, "")
@@ -22,6 +23,9 @@ func ParseOptions() *common.Options {
 
 	flag.StringVar(&cfg.Format, "f", "yaml", "")
 	flag.StringVar(&cfg.Format, "format", "yaml", "")
+
+	flag.StringVar(&tls.CertPath, "cert", "", "")
+	flag.StringVar(&tls.KeyPath, "key", "", "")
 
 	flag.BoolVar(&version, "V", false, "")
 	flag.BoolVar(&version, "version", false, "")
@@ -45,6 +49,7 @@ func ParseOptions() *common.Options {
 	common.PrintBanner()
 
 	opt.Config = cfg
+	opt.TLS = tls
 
 	return opt
 }
