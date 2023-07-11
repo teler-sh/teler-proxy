@@ -11,11 +11,14 @@ import (
 	"os/signal"
 
 	"github.com/charmbracelet/log"
+	"github.com/fsnotify/fsnotify"
 	"github.com/kitabisa/teler-proxy/common"
 	"github.com/kitabisa/teler-proxy/pkg/tunnel"
 )
 
 type Runner struct {
+	*common.Options
+	*fsnotify.Watcher
 	*http.Server
 }
 
@@ -23,6 +26,24 @@ func New(opt *common.Options) error {
 	reachable := isReachable(opt.Destination, 5*time.Second)
 	if !reachable {
 		return errDestUnreachable
+	}
+
+	run := &Runner{Options: opt}
+
+	if opt.Config.Path != "" {
+		watcher, err := fsnotify.NewWatcher()
+		if err != nil {
+			return err
+		}
+
+		if err := watcher.Add(opt.Config.Path); err != nil {
+			return err
+		}
+
+		run.Watcher = watcher
+		defer run.Watcher.Close()
+
+		go run.watch()
 	}
 
 	tun, err := tunnel.NewTunnel(opt.Port, opt.Destination, opt.Config.Path, opt.Config.Format)
@@ -39,23 +60,23 @@ func New(opt *common.Options) error {
 		Handler:  tun,
 		ErrorLog: logger,
 	}
-
-	run := &Runner{Server: server}
-	sig := make(chan os.Signal, 1)
-
-	signal.Notify(sig, syscall.SIGINT, syscall.SIGTERM, syscall.SIGUSR1)
+	run.Server = server
 
 	go func() {
-		if err := run.notify(sig); err != nil {
+		if err := run.start(); err != nil {
 			log.Fatal("Something went wrong", "err", err)
 		}
 	}()
 
-	log.Info("Server started", "port", opt.Port, "pid", os.Getpid())
-	return run.start()
+	sig := make(chan os.Signal, 1)
+	signal.Notify(sig, syscall.SIGINT, syscall.SIGTERM, syscall.SIGUSR1)
+
+	return run.notify(sig)
 }
 
 func (r *Runner) start() error {
+	log.Info("Server started", "port", r.Options.Port, "pid", os.Getpid())
+
 	err := r.Server.ListenAndServe()
 	if err != nil && err != http.ErrServerClosed {
 		return err
@@ -72,23 +93,39 @@ func (r *Runner) shutdown() error {
 }
 
 func (r *Runner) restart() error {
+	log.Info("Restarting server...")
+
 	if err := r.shutdown(); err != nil {
 		return err
 	}
 
-	return r.start()
+	return New(r.Options)
 }
 
 func (r *Runner) notify(sigCh chan os.Signal) error {
+	sig := <-sigCh
+
+	switch sig {
+	case syscall.SIGINT, syscall.SIGTERM:
+		log.Info("Gracefully shutdown...")
+		return r.shutdown()
+	case syscall.SIGHUP, syscall.SIGUSR1:
+		return r.restart()
+	}
+
+	return nil
+}
+
+func (r *Runner) watch() error {
 	for {
-		sig := <-sigCh
-		switch sig {
-		case syscall.SIGINT, syscall.SIGTERM:
-			log.Warn("Interrupted. Shutting down...")
-			return r.shutdown()
-		case syscall.SIGUSR1:
-			log.Info("Restarting server...")
-			return r.restart()
+		select {
+		case event := <-r.Watcher.Events:
+			if event.Op == 2 {
+				log.Warn("Configuration file has changed", "conf", r.Options.Config.Path)
+				return r.restart()
+			}
+		case err := <-r.Watcher.Errors:
+			return err
 		}
 	}
 }
