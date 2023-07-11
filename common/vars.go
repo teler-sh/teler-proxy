@@ -22,7 +22,7 @@ Options:
   -c, --conf <FILE>            Specify the path to the teler WAF configuration file
   -f, --format <FORMAT>        Specify the configuration file format (json/yaml) (default: yaml)
   -V, --version                Display the current teler-proxy version
-  -h, --help                   Display this help text
+  -h, --help                   Display this helps text
 
 Examples:
   teler-proxy -d localhost:80
