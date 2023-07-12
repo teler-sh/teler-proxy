@@ -5,7 +5,7 @@ go 1.19
 require (
 	github.com/charmbracelet/log v0.2.2
 	github.com/fsnotify/fsnotify v1.4.9
-	github.com/kitabisa/teler-waf v1.0.3
+	github.com/kitabisa/teler-waf v1.0.4
 )
 
 require (
