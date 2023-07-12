@@ -18,6 +18,10 @@ type Tunnel struct {
 }
 
 func NewTunnel(port int, dest, cfgPath, optFormat string) (*Tunnel, error) {
+	if dest == "" {
+		return nil, common.ErrDestAddressEmpty
+	}
+
 	dest = "http://" + dest
 	destURL, err := url.Parse(dest)
 	if err != nil {
@@ -25,10 +29,6 @@ func NewTunnel(port int, dest, cfgPath, optFormat string) (*Tunnel, error) {
 	}
 
 	var opt teler.Options
-
-	if dest == "" {
-		return nil, common.ErrDestAddressEmpty
-	}
 
 	tun := &Tunnel{}
 	tun.ReverseProxy = httputil.NewSingleHostReverseProxy(destURL)
