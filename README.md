@@ -18,7 +18,29 @@ An adapter for Envoy, Istio, Nginx, and other platforms, enabling seamless integ
 
 ## Architecture
 
-<img width="40%" src="https://github.com/kitabisa/teler-proxy/assets/25837540/5474b8e3-b8f7-4443-8775-f0a250eb3eb0">
+```mermaid
+%% ---
+%% title: teler WAF proxy architecture
+%% ---
+sequenceDiagram
+    participant internet as Internet 🌐
+    box Internal network
+        participant proxy as teler-proxy 🔐
+        participant server as Server 💻
+    end
+
+    internet->>proxy: request 🙋‍♂️
+
+    Note over proxy: analyze request 🔍
+    alt if "you're bad! 😈"
+        proxy->>internet: early return 🏃
+    else else 👍🏻
+        proxy->>server: forward request ↪️
+    end
+
+    server-->>proxy: respond 💬
+    proxy->>internet: "copy that!" ↩️
+```
 
 ## Installation
 
