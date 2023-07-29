@@ -1,6 +1,6 @@
-# teler (WAF) Proxy
+# teler Proxy
 
-An adapter for Envoy, Istio, Nginx, and other platforms, enabling seamless integration with teler WAF to protect against a variety of web-based attacks, such as cross-site scripting (XSS), SQL injection, known vulnerabilities, exploits, malicious actors, botnets, unwanted crawlers or scrapers, and directory bruteforce attacks.
+teler Proxy enabling seamless integration with [teler WAF](https://github.com/kitabisa/teler-waf) to protect locally running web service against a variety of web-based attacks, such as OWASP Top 10 categories like cross-site scripting (XSS) or SQL injection, known vulnerabilities or exploits, malicious actors, botnets, unwanted crawlers or scrapers, and directory bruteforce attacks.
 
 **See also:**
 
@@ -86,16 +86,16 @@ Here are all the options it supports.
 teler-proxy -h
 ```
 
-|          **Flag**           |                            **Description**                              | **Example**                                                                     |
-|:--------------------------: |:---------------------------------------------------------------------:  |-------------------------------------------------------------------------------  |
-| -p, --port `<PORT>`         | Set the local port to listen on **(default: 1337)**                     | `teler-proxy -p 8000 -d localhost:80`                                           |
-| -d, --dest `<ADDR>:<PORT>`  | Set the destination address for forwarding requests                     | `teler-proxy -d localhost:80`                                                   |
-| -c, --conf `<FILE>`         | Specify the path to the teler WAF configuration file                    | `teler-proxy -d localhost:80 -c /path/to/teler-waf.conf.yaml`                   |
-| -f, --format `<FORMAT>`     | Specify the configuration file format (json/yaml) **(default: yaml)**   | `teler-proxy -d localhost:80 -c /path/to/teler-waf.conf.json -f json`           |
-| --cert `<FILE>`             | Specify the path to the SSL certificate file                            | `teler-proxy -d localhost:80 --cert /path/to/cert.key --key /path/to/key.pem`   |
-| --key `<FILE>`              | Specify the path to the SSL private key file                            | `teler-proxy -d localhost:80 --cert /path/to/cert.key --key /path/to/key.pem`   |
-| -V, --version               | Display the current teler-proxy version                                 | `teler-proxy -V`                                                                |
-| -h, --help                  | Display this helps text                                                 | `teler-proxy -h`                                                                |
+|          **Flag**          |                            **Description**                            |
+| -------------------------- | --------------------------------------------------------------------- |
+| -p, --port `<PORT>`        | Set the local port to listen on **(default: 1337)**                   |
+| -d, --dest `<ADDR>:<PORT>` | Set the destination address for forwarding requests                   |
+| -c, --conf `<FILE>`        | Specify the path to the teler WAF configuration file                  |
+| -f, --format `<FORMAT>`    | Specify the configuration file format (json/yaml) **(default: yaml)** |
+| --cert `<FILE>`            | Specify the path to the SSL certificate file                          |
+| --key `<FILE>`             | Specify the path to the SSL private key file                          |
+| -V, --version              | Display the current teler-proxy version                               |
+| -h, --help                 | Display this helps text                                               |
 
 ## License
 
