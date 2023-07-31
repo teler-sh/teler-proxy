@@ -1,0 +1,53 @@
+volumes:
+  teler-proxy:
+
+networks:
+  teler-proxy:
+
+services:
+  teler-proxy:
+    build:
+      context: ../Dockerfile
+      args:
+        VERSION: docker
+    depends_on:
+      - dvwa
+    volumes:
+      - ./config/teler-proxy:/data
+    networks:
+      - teler-proxy
+    ports:
+      - 8080:1337
+    command:
+      - --dest
+      - dvwa:80
+      - --conf
+      - /data/config.yaml
+    restart: unless-stopped
+
+  dvwa:
+    build: https://github.com/digininja/DVWA.git
+    environment:
+      - DB_SERVER=db
+    depends_on:
+      - db
+    volumes:
+      - ./config/dvwa:/var/www/html/config
+    networks:
+      - teler-proxy
+    ports:
+      - 80
+    restart: unless-stopped
+
+  db:
+    image: docker.io/library/mariadb:10
+    environment:
+      - MYSQL_ROOT_PASSWORD=dvwa
+      - MYSQL_DATABASE=dvwa
+      - MYSQL_USER=dvwa
+      - MYSQL_PASSWORD=p@ssw0rd
+    volumes:
+      - teler-proxy:/var/lib/mysql
+    networks:
+      - teler-proxy
+    restart: unless-stopped

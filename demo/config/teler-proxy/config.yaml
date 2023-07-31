@@ -1,0 +1,3 @@
+whitelists:
+  - request.URI matches "^/(index|about)\\.php" && threat == DirectoryBruteforce
+  # - request.URI matches "^/((log(out|in)|index|about)|setup)\\.php" && threat == DirectoryBruteforce

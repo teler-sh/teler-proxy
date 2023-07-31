@@ -15,6 +15,8 @@ teler Proxy enabling seamless integration with [teler WAF](https://github.com/ki
   * [with Docker](#docker)
 * [Usage](#usage)
   * [Options](#options)
+* [Demo](#demo)
+* [License](#license)
 
 ## Architecture
 
@@ -96,6 +98,10 @@ teler-proxy -h
 | --key `<FILE>`             | Specify the path to the SSL private key file                          |
 | -V, --version              | Display the current teler-proxy version                               |
 | -h, --help                 | Display this helps text                                               |
+
+## Demo
+
+To experience the power of the teler WAF Proxy in action, simply follow these steps to set up and run the demo located in the [demo/](/demo) directory.
 
 ## License
 

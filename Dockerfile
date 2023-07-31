@@ -3,7 +3,7 @@ FROM golang:1.19-alpine AS build
 ARG VERSION
 ARG LDFLAGS="-s -w -X github.com/kitabisa/teler-proxy/common.Version=${VERSION}"
 
-LABEL description="teler WAF reverse proxy tool"
+LABEL description="teler Proxy enabling seamless integration with teler WAF to protect locally running web service against a variety of web-based attacks"
 LABEL repository="https://github.com/kitabisa/teler-proxy"
 LABEL maintainer="dwisiswant0"
 
