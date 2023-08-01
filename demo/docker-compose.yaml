@@ -7,13 +7,11 @@ networks:
 services:
   teler-proxy:
     build:
-      context: ../Dockerfile
-      args:
-        VERSION: docker
+      context: ../
     depends_on:
       - dvwa
     volumes:
-      - ./config/teler-proxy:/data
+      - ./config/teler-waf:/data
     networks:
       - teler-proxy
     ports:

@@ -15,7 +15,7 @@ These adjustments ensure that the DVWA is more vulnerable and allows for better 
 
 ### teler-waf
 
-* Whitelisted URIs: We have added a whitelist pattern that matches URIs with the regex `"^/(index|about)\.php"`. This action protects against the **DirectoryBruteforce** threat, ensuring these specific URIs are secure.
+* Whitelisted URIs: We have added a whitelist pattern that matches URIs with the regex `"^/(index|about)\.php"`. This action protects against the **DirectoryBruteforce** threat, ensuring these specific URIs are not protected.
 
 ## Run
 
@@ -26,7 +26,7 @@ Before starting, ensure you have the following prerequisites installed on your s
 * [docker](https://docs.docker.com/engine/install/)
 * [docker-compose](https://docs.docker.com/compose/install/)
 
-To run the teler Proxy demo with the pre-configured settings, simply execute `docker-compose up` command in this directory.
+To run the teler Proxy demo with the pre-configured settings, simply execute `docker-compose up --build` command in this directory.
 
 The demo will now start running, utilizing the teler Proxy along with the specified configurations for the Damn Vulnerable Web Application (DVWA) and the teler-waf. Access the DVWA application using your preferred web browser in http://localhost:8080.
 
