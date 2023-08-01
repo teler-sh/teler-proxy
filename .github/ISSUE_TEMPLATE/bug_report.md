@@ -19,6 +19,16 @@ Steps to reproduce the behavior:
 Your teler usage & options...
 ```
 
+teler WAF configuration:
+
+```yaml
+# your teler WAF configuration...
+```
+
+```json
+// or in JSON format...
+```
+
 **Expected behavior**
 
 A clear and concise description of what you expected to happen.
@@ -31,7 +41,7 @@ If applicable, add screenshots to help explain your problem.
 
 - OS: [e.g. mac, linux]
 - OS version: [uname -a]
-- teler Version [see go.mod]
+- teler Proxy version: [teler-proxy -V]
 
 **Additional context**
 
