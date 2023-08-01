@@ -1,6 +1,6 @@
 FROM golang:1.19-alpine AS build
 
-ARG VERSION
+ARG VERSION="docker"
 ARG LDFLAGS="-s -w -X github.com/kitabisa/teler-proxy/common.Version=${VERSION}"
 
 LABEL description="teler Proxy enabling seamless integration with teler WAF to protect locally running web service against a variety of web-based attacks"
@@ -15,7 +15,7 @@ RUN apk add build-base
 
 COPY . .
 RUN CGO_ENABLED="1" go build -ldflags "${LDFLAGS}" \
-	-o ./bin/teler-proxy ./cmd/teler-proxy 
+	-o ./bin/teler-proxy ./cmd/teler-proxy
 
 FROM alpine:latest
 

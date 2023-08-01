@@ -22,6 +22,10 @@ build:
 	@mkdir -p bin/
 	CGO_ENABLED="1" go build -ldflags ${GO_LDFLAGS} -o ./bin/${APP_NAME} ./cmd/${APP_NAME}
 
+docker:
+	@echo "Building image"
+	docker build -t ${APP_NAME}:latest --build-arg="VERSION=${VERSION}" .
+
 clean:
 	@echo "Removing binaries"
 	@rm -rf bin/
