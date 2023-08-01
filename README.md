@@ -15,6 +15,17 @@ teler Proxy enabling seamless integration with [teler WAF](https://github.com/ki
   * [with Docker](#docker)
 * [Usage](#usage)
   * [Options](#options)
+* [Configuration](#configuration)
+  * [Excludes](#excludes)
+  * [Whitelists](#whitelists)
+  * [Customs](#customs)
+  * [Customs from File](#customs-from-file)
+  * [Log File](#log-file)
+  * [No Stderr](#no-stderr)
+  * [No Update Check](#no-update-check)
+  * [Development](#development)
+  * [In Memory](#in-memory)
+  * [FalcoSidekick URL](#falcosidekick-url)
 * [Demo](#demo)
 * [License](#license)
 
@@ -45,6 +56,10 @@ sequenceDiagram
 ```
 
 ## Installation
+
+**Dependencies**:
+
+* **gcc** (GNU Compiler Collection) should be installed & configured to compile teler-waf.
 
 ### Source
 
@@ -98,6 +113,92 @@ teler-proxy -h
 | --key `<FILE>`             | Specify the path to the SSL private key file                          |
 | -V, --version              | Display the current teler-proxy version                               |
 | -h, --help                 | Display this helps text                                               |
+
+## Configuration
+
+If you don't provide a teler WAF configuration file (`-c`/`--conf`), the default configuration will be applied. The default configuration options are presented below in YAML format:
+
+```yaml
+excludes: []
+whitelists: []
+customs: []
+customs_from_file: ""
+log_file: ""
+no_stderr: false
+no_update_check: false
+development: false
+in_memory: false
+falcosidekick_url: ""
+```
+
+Or the equivalent in JSON format:
+
+```json
+{
+  "excludes": null,
+  "whitelists": null,
+  "customs": null,
+  "customs_from_file": "",
+  "log_file": "",
+  "no_stderr": false,
+  "no_update_check": false,
+  "development": false,
+  "in_memory": false,
+  "falcosidekick_url": ""
+}
+```
+
+### Excludes
+
+Excludes (**excludes**) is a list of threat types (`[]int`) to exclude from the security checks. Please refer to the [docs](https://pkg.go.dev/github.com/kitabisa/teler-waf@v1.0.4/threat#Threat).
+
+### Whitelists
+
+Whitelists (**whitelists**) is a list of DSL expressions (`[]string`) that match request elements that should be excluded from the security checks. Please refer to the [docs](https://github.com/kitabisa/teler-waf#dsl-expression).
+
+### Customs
+
+Customs (**customs**) is a list of custom security rules (`[]teler.Rule`) to apply to incoming requests.
+
+These rules can be used to create custom security checks or to override the default security checks provided by teler-waf. Please refer to the [docs](https://github.com/kitabisa/teler-waf#custom-rules).
+
+### Customs from File
+
+Customs from file (**customs_from_file**) specifies the file path or glob pattern (`string`) for loading custom security rules. These rules can be used to create custom security checks or to override the default security checks provided by teler IDS.
+
+The glob pattern supports wildcards, allowing you to specify multiple files or a directory with matching files. For example, "/path/to/custom/rules/\**/*.yaml" will load all YAML files in the "rules" directory and its subdirectories. Please refer to the [docs](https://github.com/kitabisa/teler-waf#custom-rules).
+
+### Log File
+
+Log file (**log_file**) is the file path (`string`) for the log file to store the security logs. If `log_file` is specified, log messages will be written to the specified file in addition to stderr (if `no_stderr` is **false**).
+
+### No Stderr
+
+No stderr (**no_stderr**) is a boolean flag indicating whether or not to suppress log messages from being printed to the standard error (stderr) stream.
+
+When set to `true`, log messages will not be printed to stderr. If set to `false`, log messages will be printed to stderr. By default, log messages are printed to stderr (`false`).
+
+### No Update Check
+
+No update check (**no_update_check**) is a boolean flag indicating whether or not to disable automatic threat dataset updates.
+
+When set to `true`, automatic updates will be disabled. If set to `false`, automatic updates will be enabled. By default, automatic updates are enabled (`false`). Please refer to the [docs](https://github.com/kitabisa/teler-waf#datasets).
+
+### Development
+
+Development (**development**) is a boolean flag that determines whether the request is cached or not. By default, development mode is disabled (`false`) or requests will cached. Please refer to the [docs](https://github.com/kitabisa/teler-waf#development).
+
+### In Memory
+
+In memory (**in_memory**) is a boolean flag that specifies whether or not to load the threat dataset into memory on initialization.
+
+When set to `true`, the threat dataset will be loaded into memory, which can be useful when running your service or application on a distroless or runtime image, where file access may be limited or slow. If `in_memory` is set to `false`, the threat dataset will be downloaded and stored under the user-level cache directory on the first startup. Subsequent startups will use the cached dataset. Please refer to the [docs](https://github.com/kitabisa/teler-waf#datasets).
+
+### FalcoSidekick URL
+
+FalcoSidekick URL (**falcosidekick_url**) is the URL of the FalcoSidekick endpoint to which teler-waf's events will be forwarded.
+
+This field should be set to the URL of your FalcoSidekick instance, including the protocol & port (e.g. "http://localhost:2801"). Please refer to the [docs](https://github.com/kitabisa/teler-waf#falco-sidekick).
 
 ## Demo
 
