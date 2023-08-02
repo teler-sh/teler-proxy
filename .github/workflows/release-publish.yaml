@@ -20,9 +20,9 @@ jobs:
       - uses: actions/checkout@master
         with:
           ref: "${{ inputs.tag }}"
+          fetch-depth: 0
 
       - run: goreleaser release
-        working-directory: "${{ github.workspace }}"
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 
@@ -44,4 +44,4 @@ jobs:
         with:
           push: true
           build-args: "VERSION=${{ inputs.tag }}"
-          tags: "${{ github.repository }}:latest,${{ github.repository }}:${{ inputs.tag }}"
+          tags: "ghcr.io/${{ github.repository }}:latest,ghcr.io/${{ github.repository }}:${{ inputs.tag }}"
