@@ -9,6 +9,15 @@ on:
         description: "Target tag to release & publish"
         required: true
         type: string
+      job:
+        description: "Choose job to run"
+        required: true
+        default: 'both'
+        type: choice
+        options:
+          - both
+          - release
+          - publish
 
 jobs:
   release:
@@ -16,6 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/goreleaser/goreleaser-cross:latest
+    if: ${{ github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && (inputs.job == 'release' || inputs.job == 'both')) }}
     steps:
       - uses: actions/checkout@master
         with:
@@ -29,6 +39,7 @@ jobs:
   publish: 
     name: publish images
     runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && (inputs.job == 'publish' || inputs.job == 'both')) }}
     steps:
       - uses: actions/checkout@master
         with:
