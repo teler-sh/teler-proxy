@@ -1,11 +1,17 @@
 # teler Proxy
 
+[![Kitabisa Security](https://img.shields.io/badge/kitabisa-security%20project-blue)](#)
+
+<img src="https://user-images.githubusercontent.com/25837540/97091757-7200d880-1668-11eb-82c4-e5c4971d2bc8.png" align="right" width="250px"/>
+
 teler Proxy enabling seamless integration with [teler WAF](https://github.com/kitabisa/teler-waf) to protect locally running web service against a variety of web-based attacks, such as OWASP Top 10 categories like cross-site scripting (XSS) or SQL injection, known vulnerabilities or exploits, malicious actors, botnets, unwanted crawlers or scrapers, and directory bruteforce attacks.
 
 **See also:**
 
 * [kitabisa/teler](https://github.com/kitabisa/teler): Real-time HTTP Intrusion Detection.
 * [kitabisa/teler-waf](https://github.com/kitabisa/teler-waf): Go HTTP middleware that provides teler IDS functionality.
+
+---
 
 **Table of Contents**
 
