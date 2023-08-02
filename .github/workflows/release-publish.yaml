@@ -32,6 +32,8 @@ jobs:
           ref: "${{ inputs.tag }}"
           fetch-depth: 0
 
+      - run: pwd && ls -la
+
       - run: goreleaser release
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
