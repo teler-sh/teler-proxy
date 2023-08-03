@@ -77,7 +77,7 @@ func New(opt *common.Options) error {
 	}()
 
 	sig := make(chan os.Signal, 1)
-	signal.Notify(sig, syscall.SIGINT, syscall.SIGTERM, syscall.SIGUSR1)
+	signal.Notify(sig, syscall.SIGINT, syscall.SIGTERM)
 
 	return run.notify(sig)
 }
