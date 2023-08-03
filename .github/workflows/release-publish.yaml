@@ -33,11 +33,11 @@ jobs:
           fetch-depth: 0
 
       - run: pwd && ls -la
+      - run: git rev-parse --is-inside-work-tree
 
       - run: goreleaser release
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-        working-directory: "${{ github.workspace }}"
 
   publish: 
     name: publish images
