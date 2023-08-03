@@ -142,7 +142,7 @@ func (r *Runner) notify(sigCh chan os.Signal) error {
 	switch sig {
 	case syscall.SIGINT, syscall.SIGTERM:
 		return r.shutdown()
-	case syscall.SIGHUP, syscall.SIGUSR1:
+	case syscall.SIGHUP:
 		return r.restart()
 	}
 
