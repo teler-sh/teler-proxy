@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: "Target tag to release & publish"
+        description: "Target tag to release/publish"
         required: true
         type: string
       job:
@@ -32,8 +32,8 @@ jobs:
           ref: "${{ inputs.tag }}"
           fetch-depth: 0
 
-      - run: pwd && ls -la
-      - run: git rev-parse --is-inside-work-tree
+      - run: whoami && pwd && ls -la
+      - run: cd "${{ github.workspace }}" && ls -la
 
       - run: goreleaser release
         env:
