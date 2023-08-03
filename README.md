@@ -17,8 +17,9 @@ teler Proxy enabling seamless integration with [teler WAF](https://github.com/ki
 
 * [Architecture](#architecture)
 * [Install](#installation)
-  * [from Source](#source)
-  * [with Docker](#docker)
+  * [Binary](#binary)
+  * [Source](#source)
+  * [Docker](#docker)
 * [Usage](#usage)
   * [Options](#options)
 * [Configuration](#configuration)
@@ -63,11 +64,15 @@ sequenceDiagram
 
 ## Installation
 
+### Binary
+
+Simply, download a pre-built binary from [releases page](https://github.com/kitabisa/teler-proxy/releases). Unpack and run!
+
+### Source
+
 **Dependencies**:
 
 * **gcc** (GNU Compiler Collection) should be installed & configured to compile teler-waf.
-
-### Source
 
 Using [Go](https://golang.org/doc/install) (v1.19+) compiler:
 
