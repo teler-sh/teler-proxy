@@ -32,8 +32,7 @@ jobs:
           ref: "${{ inputs.tag }}"
           fetch-depth: 0
 
-      - run: whoami && pwd && ls -la
-      - run: cd "${{ github.workspace }}" && ls -la
+      - run: git config --global --add safe.directory "/__w/${{ github.repository }}"
 
       - run: goreleaser release
         env:
