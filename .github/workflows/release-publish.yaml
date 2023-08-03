@@ -19,9 +19,6 @@ on:
           - release
           - publish
 
-env:
-  TARGET_VERSION: "${{ inputs.tag || github.ref_name }}"
-
 jobs:
   release:
     name: goreleaser-cross
@@ -32,7 +29,7 @@ jobs:
     steps:
       - uses: actions/checkout@master
         with:
-          ref: "${{ env.TARGET_VERSION }}"
+          ref: "${{ inputs.tag || github.ref_name }}"
           fetch-depth: 0
 
       - run: git config --global --add safe.directory "$(pwd)"
@@ -48,7 +45,7 @@ jobs:
     steps:
       - uses: actions/checkout@master
         with:
-          ref: "${{ env.TARGET_VERSION }}"
+          ref: "${{ inputs.tag || github.ref_name }}"
 
       - uses: docker/login-action@v2.1.0
         with:
@@ -59,5 +56,5 @@ jobs:
       - uses: docker/build-push-action@v4.0.0
         with:
           push: true
-          build-args: "VERSION=${{ env.TARGET_VERSION }}"
-          tags: "ghcr.io/${{ github.repository }}:latest,ghcr.io/${{ github.repository }}:${{ env.TARGET_VERSION }}"
+          build-args: "VERSION=${{ inputs.tag || github.ref_name }}"
+          tags: "ghcr.io/${{ github.repository }}:latest,ghcr.io/${{ github.repository }}:${{ inputs.tag || github.ref_name }}"
