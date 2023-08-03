@@ -30,7 +30,6 @@ jobs:
       - uses: actions/checkout@master
         with:
           ref: "${{ inputs.tag || github.ref_name }}"
-          fetch-depth: 0
 
       - run: git config --global --add safe.directory "$(pwd)"
 
