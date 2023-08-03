@@ -32,7 +32,7 @@ jobs:
           ref: "${{ inputs.tag }}"
           fetch-depth: 0
 
-      - run: git config --global --add safe.directory "/__w/${{ github.repository }}"
+      - run: git config --global --add safe.directory "$(pwd)"
 
       - run: goreleaser release
         env:
