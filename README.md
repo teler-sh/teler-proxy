@@ -122,7 +122,11 @@ teler-proxy -h
 
 ## Configuration
 
-If you don't provide a teler WAF configuration file (`-c`/`--conf`), the default configuration will be applied. The default configuration options are presented below in YAML format:
+The configuration is provides a comprehensive set of options to fine-tune and tailor the behavior of the teler Web Application Firewall (WAF). Through the use of the teler WAF configuration (`-c`/`--conf`), you gain full control over how the WAF operates and responds to incoming traffic.
+
+In case you opt not to provide a custom configuration file, the teler WAF will seamlessly apply a default configuration, ensuring that your application remains protected with sensible and reasonable settings.
+
+The default configuration options are presented below in YAML format:
 
 ```yaml
 excludes: []
@@ -153,6 +157,8 @@ Or the equivalent in JSON format:
   "falcosidekick_url": ""
 }
 ```
+
+By leveraging this versatile teler WAF configuration, you can fine-tune the WAF to perfectly align with your specific security requirements, ensuring maximum protection for your web service while enjoying the flexibility and power of teler WAF.
 
 ### Excludes
 
