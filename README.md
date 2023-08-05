@@ -138,6 +138,10 @@ excludes: []
 whitelists: []
 customs: []
 customs_from_file: ""
+response:
+    status: 0
+    html: ""
+    html_file: ""
 log_file: ""
 no_stderr: false
 no_update_check: false
@@ -150,10 +154,15 @@ Or the equivalent in JSON format:
 
 ```json
 {
-  "excludes": null,
-  "whitelists": null,
-  "customs": null,
+  "excludes": [],
+  "whitelists": [],
+  "customs": [],
   "customs_from_file": "",
+  "response": {
+    "status": 0,
+    "html": "",
+    "html_file": ""
+  },
   "log_file": "",
   "no_stderr": false,
   "no_update_check": false,
@@ -184,6 +193,10 @@ These rules can be used to create custom security checks or to override the defa
 Customs from file (**customs_from_file**) specifies the file path or glob pattern (`string`) for loading custom security rules. These rules can be used to create custom security checks or to override the default security checks provided by teler IDS.
 
 The glob pattern supports wildcards, allowing you to specify multiple files or a directory with matching files. For example, "/path/to/custom/rules/\**/*.yaml" will load all YAML files in the "rules" directory and its subdirectories. Please refer to the [docs](https://github.com/kitabisa/teler-waf#custom-rules).
+
+### Custom Response
+
+Response (**response**) is the configuration for custom error response pages when a request is blocked or rejected. Please refer to the [docs](https://github.com/kitabisa/teler-waf#custom-response).
 
 ### Log File
 
