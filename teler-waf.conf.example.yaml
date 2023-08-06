@@ -2,6 +2,10 @@ excludes: []
 whitelists: []
 customs: []
 customs_from_file: ""
+response:
+    status: 0
+    html: ""
+    html_file: ""
 log_file: ""
 no_stderr: false
 no_update_check: false
