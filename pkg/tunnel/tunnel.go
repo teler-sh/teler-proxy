@@ -22,7 +22,10 @@ func NewTunnel(port int, dest, cfgPath, optFormat string) (*Tunnel, error) {
 		return nil, common.ErrDestAddressEmpty
 	}
 
-	dest = "http://" + dest
+	if !strings.HasPrefix(dest, "http://") || !strings.HasPrefix(dest, "https://") {
+		dest = "http://" + dest
+	}
+
 	destURL, err := url.Parse(dest)
 	if err != nil {
 		return nil, err
