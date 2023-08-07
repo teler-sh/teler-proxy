@@ -176,7 +176,7 @@ By leveraging this versatile teler WAF configuration, you can fine-tune the WAF 
 
 ### Excludes
 
-Excludes (**excludes**) is a list of threat types (`[]int`) to exclude from the security checks. Please refer to the [docs](https://pkg.go.dev/github.com/kitabisa/teler-waf@v1.0.4/threat#Threat).
+Excludes (**excludes**) is a list of threat types (`[]int`) to exclude from the security checks. Please refer to the [docs](https://pkg.go.dev/github.com/kitabisa/teler-waf/threat#Threat).
 
 ### Whitelists
 
