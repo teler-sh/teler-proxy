@@ -11,6 +11,8 @@ teler Proxy enabling seamless integration with [teler WAF](https://github.com/ki
 * [kitabisa/teler](https://github.com/kitabisa/teler): Real-time HTTP Intrusion Detection.
 * [kitabisa/teler-waf](https://github.com/kitabisa/teler-waf): Go HTTP middleware that provides teler IDS functionality.
 
+https://github.com/kitabisa/teler-proxy/assets/25837540/665fac13-7599-422d-8bd5-0c19ada3e5cf
+
 ---
 
 **Table of Contents**
@@ -90,6 +92,8 @@ cd teler-proxy/
 make build
 ```
 
+> **Warning**: The `master` branch contains the latest code changes and updates, which might not have undergone thorough testing and quality assurance - thus, you may encounter instability and unexpected behavior.
+
 ### Docker
 
 Pull the [Docker](https://docs.docker.com/get-docker/) image by running:
@@ -107,6 +111,8 @@ teler-proxy -d <ADDR>:<PORT> [OPTIONS...]
 ```
 
 ### Options
+
+<img src="https://github.com/kitabisa/teler-proxy/assets/25837540/e166b479-9a7a-4ea4-923e-3a6867e4e3fa" width="75%">
 
 Here are all the options it supports.
 
