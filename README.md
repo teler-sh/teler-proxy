@@ -92,7 +92,8 @@ cd teler-proxy/
 make build
 ```
 
-> **Warning**: The `master` branch contains the latest code changes and updates, which might not have undergone thorough testing and quality assurance - thus, you may encounter instability and unexpected behavior.
+> **Warning**
+> The `master` branch contains the latest code changes and updates, which might not have undergone thorough testing and quality assurance - thus, you may encounter instability and unexpected behavior.
 
 ### Docker
 
