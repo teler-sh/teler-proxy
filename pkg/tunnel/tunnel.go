@@ -14,16 +14,12 @@ import (
 
 type Tunnel struct {
 	*teler.Teler
-	ReverseProxy *httputil.ReverseProxy
+	*httputil.ReverseProxy
 }
 
 func NewTunnel(port int, dest, cfgPath, optFormat string) (*Tunnel, error) {
 	if dest == "" {
 		return nil, common.ErrDestAddressEmpty
-	}
-
-	if !strings.HasPrefix(dest, "http://") || !strings.HasPrefix(dest, "https://") {
-		dest = "http://" + dest
 	}
 
 	destURL, err := url.Parse(dest)

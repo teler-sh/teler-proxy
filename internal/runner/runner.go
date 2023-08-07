@@ -54,7 +54,9 @@ func New(opt *common.Options) error {
 		}()
 	}
 
-	tun, err := tunnel.NewTunnel(opt.Port, opt.Destination, opt.Config.Path, opt.Config.Format)
+	dest := buildDest(opt.Destination)
+
+	tun, err := tunnel.NewTunnel(opt.Port, dest, opt.Config.Path, opt.Config.Format)
 	if err != nil {
 		return err
 	}
