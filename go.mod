@@ -6,6 +6,7 @@ require (
 	github.com/charmbracelet/log v0.2.3
 	github.com/fsnotify/fsnotify v1.6.0
 	github.com/kitabisa/teler-waf v1.1.1
+	github.com/mattn/go-colorable v0.1.13
 )
 
 require (
@@ -66,7 +67,6 @@ require (
 	github.com/valyala/fasttemplate v1.2.2 // indirect
 	gitlab.com/golang-commonmark/mdurl v0.0.0-20191124015652-932350d1cb84 // indirect
 	go.opencensus.io v0.24.0 // indirect
-	go.uber.org/atomic v1.11.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
 	go.uber.org/zap v1.25.0 // indirect
 	golang.org/x/crypto v0.11.0 // indirect
