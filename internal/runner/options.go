@@ -3,8 +3,11 @@ package runner
 import (
 	"flag"
 	"os"
+	"time"
 
+	"github.com/charmbracelet/log"
 	"github.com/kitabisa/teler-proxy/common"
+	"github.com/mattn/go-colorable"
 )
 
 func ParseOptions() *common.Options {
@@ -50,6 +53,13 @@ func ParseOptions() *common.Options {
 
 	opt.Config = cfg
 	opt.TLS = tls
+	opt.Logger = log.NewWithOptions(
+		colorable.NewColorableStderr(),
+		log.Options{
+			ReportTimestamp: true,
+			TimeFormat:      time.Kitchen,
+		},
+	)
 
 	return opt
 }

@@ -49,7 +49,7 @@ func New(opt *common.Options) error {
 
 		go func() {
 			if err := run.watch(); err != nil {
-				log.Fatal("Something went wrong", "err", err)
+				opt.Logger.Fatal("Something went wrong", "err", err)
 			}
 		}()
 	}
@@ -74,7 +74,7 @@ func New(opt *common.Options) error {
 
 	go func() {
 		if err := run.start(); err != nil {
-			log.Fatal("Something went wrong", "err", err)
+			opt.Logger.Fatal("Something went wrong", "err", err)
 		}
 	}()
 
@@ -91,7 +91,7 @@ func (r *Runner) start() error {
 	key := r.Options.TLS.KeyPath
 	tls := (cert != "" && key != "")
 
-	log.Info(
+	r.Options.Logger.Info(
 		"Server started!",
 		"port", r.Options.Port,
 		"tls", tls,
@@ -120,7 +120,7 @@ func (r *Runner) shutdown() error {
 	}
 	r.shuttingDown = true
 
-	log.Info("Gracefully shutdown...")
+	r.Options.Logger.Info("Gracefully shutdown...")
 
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
@@ -129,7 +129,7 @@ func (r *Runner) shutdown() error {
 }
 
 func (r *Runner) restart() error {
-	log.Info("Restarting...")
+	r.Options.Logger.Info("Restarting...")
 
 	if err := r.shutdown(); err != nil {
 		return err
@@ -156,7 +156,7 @@ func (r *Runner) watch() error {
 		select {
 		case event := <-r.Watcher.Events:
 			if event.Op == 2 {
-				log.Warn("Configuration file has changed", "conf", r.Options.Config.Path)
+				r.Options.Logger.Warn("Configuration file has changed", "conf", r.Options.Config.Path)
 				return r.restart()
 			}
 		case err := <-r.Watcher.Errors:
