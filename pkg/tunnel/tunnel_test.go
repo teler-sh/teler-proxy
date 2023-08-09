@@ -4,14 +4,14 @@ import (
 	"os"
 	"testing"
 
-	// "net/http"
-	// "net/http/httptest"
-	// "net/http/httputil"
-	// "net/url"
+	"net/http"
+	"net/http/httptest"
+	"net/http/httputil"
+	"net/url"
 	"path/filepath"
 
 	"github.com/kitabisa/teler-proxy/common"
-	// "github.com/kitabisa/teler-waf"
+	"github.com/kitabisa/teler-waf"
 )
 
 var (
@@ -86,28 +86,39 @@ func TestNewTunnel(t *testing.T) {
 	if tun != nil {
 		t.Fatalf("Expected %v, but got: %v", nil, tun)
 	}
+
+	// Test case 8: with invalid config file
+	_, err = NewTunnel(8080, "http://example.com", "nonexistent", "yaml")
+	if err == nil {
+		t.Fatal("Expected error, but got nil")
+	}
+
+	// Test case 9: with invalid config file
+	_, err = NewTunnel(8080, "http://example.com", "nonexistent", "json")
+	if err == nil {
+		t.Fatal("Expected no error, but got nil")
+	}
 }
 
-// TODO(dwisiswant0): make these test works
-// func TestServeHTTP(t *testing.T) {
-// 	parsedURL, _ := url.Parse("http://localhost")
-// 	mockReverseProxy := httputil.NewSingleHostReverseProxy(parsedURL)
+func TestServeHTTP(t *testing.T) {
+	parsedURL, _ := url.Parse("http://localhost")
+	mockReverseProxy := httputil.NewSingleHostReverseProxy(parsedURL)
 
-// 	tunnel := &Tunnel{
-// 		Teler:        teler.New(),
-// 		ReverseProxy: mockReverseProxy,
-// 	}
+	tunnel := &Tunnel{
+		Teler:        teler.New(),
+		ReverseProxy: mockReverseProxy,
+	}
 
-// 	// Create a mock HTTP request and response recorder
-// 	req, err := http.NewRequest("POST", "/", nil)
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-// 	recorder := httptest.NewRecorder()
+	// Create a mock HTTP request and response recorder
+	req, err := http.NewRequest("GET", "/", nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	recorder := httptest.NewRecorder()
 
-// 	tunnel.ServeHTTP(recorder, req)
+	tunnel.ServeHTTP(recorder, req)
 
-// 	if recorder.Code != http.StatusOK {
-// 		t.Errorf("Expected status code %d, but got %d", http.StatusOK, recorder.Code)
-// 	}
-// }
+	if recorder.Code != http.StatusOK {
+		t.Errorf("Expected status code %d, but got %d", http.StatusOK, recorder.Code)
+	}
+}
