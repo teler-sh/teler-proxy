@@ -36,6 +36,7 @@ https://github.com/kitabisa/teler-proxy/assets/25837540/665fac13-7599-422d-8bd5-
   * [In Memory](#in-memory)
   * [FalcoSidekick URL](#falcosidekick-url)
 * [Demo](#demo)
+* [Community](#community)
 * [License](#license)
 
 ## Architecture
@@ -240,6 +241,12 @@ This field should be set to the URL of your FalcoSidekick instance, including th
 ## Demo
 
 To experience the power of the teler WAF Proxy in action, simply follow these steps to set up and run the demo located in the [demo/](/demo) directory.
+
+## Community
+
+We use the Google Groups as our dedicated mailing list. Subscribe to [teler-announce](https://groups.google.com/g/teler-announce) via [teler-announce+subscribe@googlegroups.com](mailto:teler-announce+subscribe@googlegroups.com) for important announcements, such as the availability of new releases. This subscription will keep you informed about significant developments related to [teler IDS](https://github.com/kitabisa/teler), [teler WAF](https://github.com/kitabisa/teler-waf), [teler Proxy](https://github.com/kitabisa/teler-proxy), and [teler Resources](https://github.com/kitabisa/teler-resources).
+
+For any [inquiries](https://github.com/kitabisa/teler-proxy/discussions/categories/q-a), [discussions](https://github.com/kitabisa/teler-proxy/discussions), or [issues](https://github.com/kitabisa/teler-proxy/issues) are being tracked here on GitHub. This is where we actively manage and address these aspects of our community engagement.
 
 ## License
 
