@@ -15,6 +15,14 @@ func ParseOptions() *common.Options {
 	cfg := &common.Config{}
 	tls := &common.TLS{}
 
+	opt.Logger = log.NewWithOptions(
+		colorable.NewColorableStderr(),
+		log.Options{
+			ReportTimestamp: true,
+			TimeFormat:      time.Kitchen,
+		},
+	)
+
 	flag.IntVar(&opt.Port, "p", 1337, "")
 	flag.IntVar(&opt.Port, "port", 1337, "")
 
@@ -39,27 +47,20 @@ func ParseOptions() *common.Options {
 	}
 	flag.Parse()
 
-	if len(os.Args) <= 1 {
-		flag.Usage()
-		os.Exit(2)
-	}
-
 	if version {
 		common.PrintVersion()
 		os.Exit(1)
+	}
+
+	if opt.Destination == "" {
+		common.PrintBanner()
+		opt.Logger.Fatal("Something went wrong", "err", "missing destination address")
 	}
 
 	common.PrintBanner()
 
 	opt.Config = cfg
 	opt.TLS = tls
-	opt.Logger = log.NewWithOptions(
-		colorable.NewColorableStderr(),
-		log.Options{
-			ReportTimestamp: true,
-			TimeFormat:      time.Kitchen,
-		},
-	)
 
 	return opt
 }
