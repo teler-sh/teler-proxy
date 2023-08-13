@@ -184,6 +184,9 @@ By leveraging this versatile teler WAF configuration, you can fine-tune the WAF 
 
 ### Excludes
 
+> **Warning**
+> Threat exclusions (`Excludes`) will be deprecated in the upcoming teler-waf release (**v2**), use [`Whitelists`](#whitelists) instead. See [teler-waf#73](https://github.com/kitabisa/teler-waf/discussions/73).
+
 Excludes (**excludes**) is a list of threat types (`[]int`) to exclude from the security checks. Please refer to the [docs](https://pkg.go.dev/github.com/kitabisa/teler-waf/threat#Threat).
 
 ### Whitelists
