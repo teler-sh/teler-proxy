@@ -5,7 +5,7 @@ go 1.19
 require (
 	github.com/charmbracelet/log v0.2.3
 	github.com/fsnotify/fsnotify v1.6.0
-	github.com/kitabisa/teler-waf v1.1.1
+	github.com/kitabisa/teler-waf v1.1.2
 	github.com/mattn/go-colorable v0.1.13
 )
 
@@ -74,7 +74,7 @@ require (
 	golang.org/x/net v0.12.0 // indirect
 	golang.org/x/oauth2 v0.10.0 // indirect
 	golang.org/x/sys v0.10.0 // indirect
-	golang.org/x/text v0.11.0 // indirect
+	golang.org/x/text v0.12.0 // indirect
 	golang.org/x/xerrors v0.0.0-20220907171357-04be3eba64a2 // indirect
 	google.golang.org/api v0.130.0 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
