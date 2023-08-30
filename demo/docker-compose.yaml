@@ -8,6 +8,8 @@ services:
   teler-proxy:
     build:
       context: ../
+      args:
+        VERSION: docker
     depends_on:
       - dvwa
     volumes:
