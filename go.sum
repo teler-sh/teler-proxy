@@ -377,6 +377,8 @@ github.com/jstemmer/go-junit-report v0.9.1/go.mod h1:Brl9GWCQeLvo8nXZwPNNblvFj/X
 github.com/kisielk/gotool v1.0.0/go.mod h1:XhKaO+MFFWcvkIS/tQcRk01m1F5IRFswLeQ+oQHNcck=
 github.com/kitabisa/teler-waf v1.1.3 h1:BsPtJywhrkyapw7mMHyPB6EQpjolMFVQrQV0Wi5UkCk=
 github.com/kitabisa/teler-waf v1.1.3/go.mod h1:ddgOq6VrR3zRSaDKjrId3h9lnTPRQSNW3QLiws2RnRE=
+github.com/kitabisa/teler-waf v1.1.4 h1:CGXX8PIABU6Ts/hmg5iUy2Y5vK/cvx5UWCJm6eeivKg=
+github.com/kitabisa/teler-waf v1.1.4/go.mod h1:ddgOq6VrR3zRSaDKjrId3h9lnTPRQSNW3QLiws2RnRE=
 github.com/klauspost/compress v1.15.11/go.mod h1:QPwzmACJjUTFsnSHH934V6woptycfrDDJnH7hvFVbGM=
 github.com/klauspost/compress v1.16.7 h1:2mk3MPGNzKyxErAw8YaohYh69+pa4sIQSC0fPGCFR9I=
 github.com/klauspost/compress v1.16.7/go.mod h1:ntbaceVETuRiXiv4DpjP66DpAtAGkEQskQzEyD//IeE=
