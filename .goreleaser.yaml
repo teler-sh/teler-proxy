@@ -1,6 +1,13 @@
 env:
   - CGO_ENABLED=1
 
+before:
+  hooks:
+    - go mod tidy
+
+release:
+  prerelease: auto
+
 builds:
   - id: teler-proxy_darwin-amd64
     binary: teler-proxy
@@ -95,6 +102,11 @@ archives:
       - teler-proxy_windows-amd64
     name_template: "teler-proxy_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
     wrap_in_directory: false
+    files:
+      - "LICENSE*"
+      - "README*"
+      - "NOTICE"
+      - "teler-waf.conf.example.*"
     format: zip
 
 checksum:
