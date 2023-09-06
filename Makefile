@@ -1,7 +1,7 @@
 APP_NAME = teler-proxy
 VERSION  = $(shell git describe --always --tags)
 
-GO_LDFLAGS = "-s -w -X github.com/kitabisa/teler-proxy/common.Version=${VERSION}"
+GO_LDFLAGS = "-s -w -X 'github.com/kitabisa/teler-proxy/common.Version=${VERSION}'"
 
 vet:
 	go vet ./...
@@ -20,7 +20,7 @@ report:
 build:
 	@echo "Building binary"
 	@mkdir -p bin/
-	CGO_ENABLED="1" go build -ldflags ${GO_LDFLAGS} -o ./bin/${APP_NAME} ./cmd/${APP_NAME}
+	CGO_ENABLED="1" go build -ldflags ${GO_LDFLAGS} -trimpath -o ./bin/${APP_NAME} ./cmd/${APP_NAME}
 
 docker:
 	@echo "Building image"
