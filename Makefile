@@ -25,7 +25,10 @@ pprof: bench
 pprof:
 	cp cpu.out default.pgo
 
-test: vet lint semgrep
+test:
+	go test -race -v ./pkg/tunnel/...
+
+test-all: test vet lint semgrep
 
 report:
 	goreportcard-cli
