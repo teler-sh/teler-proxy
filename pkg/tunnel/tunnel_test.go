@@ -124,3 +124,57 @@ func TestServeHTTP(t *testing.T) {
 		t.Errorf("Expected status code %d, but got %d", http.StatusOK, recorder.Code)
 	}
 }
+
+func BenchmarkNewTunnel(b *testing.B) {
+	b.Run("YAML", func(b *testing.B) {
+		b.ResetTimer()
+		b.ReportAllocs()
+
+		for i := 0; i < b.N; i++ {
+			_, err := NewTunnel(8080, dest, filepath.Join(workspaceDir, "teler-waf.conf.example.yaml"), "yaml")
+			if err != nil {
+				b.Fatalf("Expected no error, but got: %v", err)
+			}
+		}
+	})
+
+	b.Run("JSON", func(b *testing.B) {
+		b.ResetTimer()
+		b.ReportAllocs()
+
+		for i := 0; i < b.N; i++ {
+			_, err := NewTunnel(8080, dest, filepath.Join(workspaceDir, "teler-waf.conf.example.json"), "json")
+			if err != nil {
+				b.Fatalf("Expected no error, but got: %v", err)
+			}
+		}
+	})
+}
+
+func BenchmarkServeHTTP(b *testing.B) {
+	parsedURL, _ := url.Parse("http://localhost")
+	mockReverseProxy := httputil.NewSingleHostReverseProxy(parsedURL)
+
+	tunnel := &Tunnel{
+		Teler:        teler.New(),
+		ReverseProxy: mockReverseProxy,
+	}
+
+	// Create a mock HTTP request and response recorder
+	req, err := http.NewRequest("GET", "/", nil)
+	if err != nil {
+		b.Fatal(err)
+	}
+	recorder := httptest.NewRecorder()
+
+	b.ResetTimer()
+	b.ReportAllocs()
+
+	for i := 0; i < b.N; i++ {
+		tunnel.ServeHTTP(recorder, req)
+
+		if recorder.Code != http.StatusOK {
+			b.Errorf("Expected status code %d, but got %d", http.StatusOK, recorder.Code)
+		}
+	}
+}
