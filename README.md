@@ -87,14 +87,17 @@ CGO_ENABLED=1 go install github.com/kitabisa/teler-proxy/cmd/teler-proxy@latest
 
 Manual building executable from source code:
 
+> **Warning**
+> The `master` branch contains the latest code changes and updates, which might not have undergone thorough testing and quality assurance - thus, you may encounter instability and unexpected behavior.
+
 ```bash
 git clone https://github.com/kitabisa/teler-proxy.git
 cd teler-proxy/
 make build
 ```
 
-> **Warning**
-> The `master` branch contains the latest code changes and updates, which might not have undergone thorough testing and quality assurance - thus, you may encounter instability and unexpected behavior.
+> **Note**
+> :bulb: **ProTip**: If you're using Go version 1.20 or newer, you can build the executable file with our automatically generated default PGO<sup>[<a href="https://go.dev/doc/pgo">?</a>]</sup> profile to improve the performance by using `make build-pgo` command.
 
 ### Docker
 
