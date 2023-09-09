@@ -11,7 +11,7 @@ teler Proxy enabling seamless integration with [teler WAF](https://github.com/ki
 * [kitabisa/teler](https://github.com/kitabisa/teler): Real-time HTTP Intrusion Detection.
 * [kitabisa/teler-waf](https://github.com/kitabisa/teler-waf): Go HTTP middleware that provides teler IDS functionality.
 
-https://github.com/kitabisa/teler-proxy/assets/25837540/665fac13-7599-422d-8bd5-0c19ada3e5cf
+https://github.com/kitabisa/teler-proxy/assets/25837540/340dd31f-9686-4935-8522-806d95e815e1
 
 ---
 
