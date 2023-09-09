@@ -93,6 +93,7 @@ Manual building executable from source code:
 ```bash
 git clone https://github.com/kitabisa/teler-proxy.git
 cd teler-proxy/
+# git checkout [VERSION TAG]
 make build
 ```
 
@@ -191,6 +192,14 @@ By leveraging this versatile teler WAF configuration, you can fine-tune the WAF 
 > Threat exclusions (`Excludes`) will be deprecated in the upcoming teler-waf release (**v2**), use [`Whitelists`](#whitelists) instead. See [teler-waf#73](https://github.com/kitabisa/teler-waf/discussions/73).
 
 Excludes (**excludes**) is a list of threat types (`[]int`) to exclude from the security checks. Please refer to the [docs](https://pkg.go.dev/github.com/kitabisa/teler-waf/threat#Threat).
+
+> **Note**
+> * **1** for `CommonWebAttack`
+> * **2** for `CVE`
+> * **3** for `BadIPAddress`
+> * **4** for `BadReferrer`
+> * **5** for `BadCrawler`
+> * **6** for `DirectoryBruteforce`
 
 ### Whitelists
 
