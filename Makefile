@@ -12,6 +12,19 @@ lint:
 semgrep:
 	semgrep --config auto
 
+bench:
+	go test ./pkg/tunnel/... -bench . -cpu 4 -benchmem $(ARGS)
+
+cover: FILE := /tmp/teler-coverage.out # Define coverage file
+cover: ## Runs the tests and check & view the test coverage
+	go test -race -coverprofile=$(FILE) -covermode=atomic ./...
+	go tool cover -func=$(FILE)
+
+pprof: ARGS := -cpuprofile=cpu.out -memprofile=mem.out -benchtime 30s
+pprof: bench
+pprof:
+	cp cpu.out default.pgo
+
 test: vet lint semgrep
 
 report:
