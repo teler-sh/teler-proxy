@@ -20,7 +20,10 @@ report:
 build:
 	@echo "Building binary"
 	@mkdir -p bin/
-	CGO_ENABLED="1" go build -ldflags ${GO_LDFLAGS} -trimpath -o ./bin/${APP_NAME} ./cmd/${APP_NAME}
+	CGO_ENABLED="1" go build -ldflags ${GO_LDFLAGS} -trimpath $(ARGS) -o ./bin/${APP_NAME} ./cmd/${APP_NAME}
+
+build-pgo: ARGS := -pgo=$(shell pwd)/default.pgo
+build-pgo: build
 
 docker:
 	@echo "Building image"
