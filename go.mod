@@ -5,7 +5,7 @@ go 1.19
 require (
 	github.com/charmbracelet/log v0.2.4
 	github.com/fsnotify/fsnotify v1.6.0
-	github.com/kitabisa/teler-waf v1.1.7
+	github.com/kitabisa/teler-waf v1.2.0-alpha.1
 	github.com/mattn/go-colorable v0.1.13
 )
 
