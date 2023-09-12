@@ -31,6 +31,10 @@ jobs:
         with:
           ref: "${{ inputs.tag || github.ref_name }}"
 
+      - uses: actions/setup-go@v4
+        with:
+          go-version: 'stable'
+
       - run: git config --global --add safe.directory "$(pwd)"
 
       - run: goreleaser release
