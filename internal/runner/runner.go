@@ -91,18 +91,20 @@ func New(opt *common.Options) error {
 		defer w.Close()
 		run.watcher.datasets = w
 
-		run.cron()
+		if err := run.cron(); err != nil {
+			opt.Logger.Fatal(errSomething, "err", err)
+		}
 	}
 
 	go func() {
 		if err := run.watch(); err != nil {
-			opt.Logger.Fatal("Something went wrong", "err", err)
+			opt.Logger.Fatal(errSomething, "err", err)
 		}
 	}()
 
 	go func() {
 		if err := run.start(); err != nil {
-			opt.Logger.Fatal("Something went wrong", "err", err)
+			opt.Logger.Fatal(errSomething, "err", err)
 		}
 	}()
 
