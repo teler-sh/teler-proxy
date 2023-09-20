@@ -13,8 +13,10 @@ import (
 )
 
 type Tunnel struct {
-	*teler.Teler
 	*httputil.ReverseProxy
+	*teler.Teler
+
+	Options teler.Options
 }
 
 func NewTunnel(port int, dest, cfgPath, optFormat string) (*Tunnel, error) {
@@ -48,6 +50,7 @@ func NewTunnel(port int, dest, cfgPath, optFormat string) (*Tunnel, error) {
 			return nil, err
 		}
 
+		tun.Options = opt
 		tun.Teler = teler.New(opt)
 	} else {
 		tun.Teler = teler.New()

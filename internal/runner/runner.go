@@ -14,16 +14,21 @@ import (
 	"github.com/charmbracelet/log"
 	"github.com/fsnotify/fsnotify"
 	"github.com/kitabisa/teler-proxy/common"
+	"github.com/kitabisa/teler-proxy/internal/cron"
 	"github.com/kitabisa/teler-proxy/pkg/tunnel"
+	"github.com/kitabisa/teler-waf"
+	"github.com/kitabisa/teler-waf/threat"
 )
 
 type Runner struct {
 	*common.Options
-	*fsnotify.Watcher
+	*cron.Cron
 	*http.Server
 
 	shuttingDown bool
 	shutdownLock sync.Mutex
+	telerOpts    teler.Options
+	watcher
 }
 
 func New(opt *common.Options) error {
@@ -35,23 +40,17 @@ func New(opt *common.Options) error {
 	run := &Runner{Options: opt}
 
 	if opt.Config.Path != "" {
-		watcher, err := fsnotify.NewWatcher()
+		w, err := fsnotify.NewWatcher()
 		if err != nil {
 			return err
 		}
 
-		if err := watcher.Add(opt.Config.Path); err != nil {
+		if err := w.Add(opt.Config.Path); err != nil {
 			return err
 		}
 
-		run.Watcher = watcher
-		defer run.Watcher.Close()
-
-		go func() {
-			if err := run.watch(); err != nil {
-				opt.Logger.Fatal("Something went wrong", "err", err)
-			}
-		}()
+		defer w.Close()
+		run.watcher.config = w
 	}
 
 	dest := buildDest(opt.Destination)
@@ -70,7 +69,36 @@ func New(opt *common.Options) error {
 		Handler:  tun,
 		ErrorLog: logger,
 	}
+
 	run.Server = server
+	run.telerOpts = tun.Options
+
+	if run.shouldCron() && run.Cron == nil {
+		w, err := fsnotify.NewWatcher()
+		if err != nil {
+			return err
+		}
+
+		ds, err := threat.Location()
+		if err != nil {
+			return err
+		}
+
+		if err := w.Add(ds); err != nil {
+			return err
+		}
+
+		defer w.Close()
+		run.watcher.datasets = w
+
+		run.cron()
+	}
+
+	go func() {
+		if err := run.watch(); err != nil {
+			opt.Logger.Fatal("Something went wrong", "err", err)
+		}
+	}()
 
 	go func() {
 		if err := run.start(); err != nil {
@@ -154,13 +182,32 @@ func (r *Runner) notify(sigCh chan os.Signal) error {
 func (r *Runner) watch() error {
 	for {
 		select {
-		case event := <-r.Watcher.Events:
-			if event.Op == 2 {
+		case event := <-r.watcher.config.Events:
+			if event.Op.Has(fsnotify.Write) {
 				r.Options.Logger.Warn("Configuration file has changed", "conf", r.Options.Config.Path)
 				return r.restart()
 			}
-		case err := <-r.Watcher.Errors:
+		case event := <-r.watcher.datasets.Events:
+			if event.Op.Has(fsnotify.Write) || event.Op.Has(fsnotify.Remove) {
+				r.Options.Logger.Warn("Threat datasets has updated", "event", event.Op)
+				return r.restart()
+			}
+		case err := <-r.watcher.config.Errors:
+			return err
+		case err := <-r.watcher.datasets.Errors:
 			return err
 		}
 	}
+}
+
+func (r *Runner) cron() error {
+	c, err := cron.New()
+	if err != nil {
+		return err
+	}
+
+	r.Cron = c
+	c.Scheduler.StartAsync()
+
+	return nil
 }
