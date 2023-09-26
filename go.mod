@@ -6,7 +6,7 @@ require (
 	github.com/charmbracelet/log v0.2.4
 	github.com/fsnotify/fsnotify v1.6.0
 	github.com/go-co-op/gocron v1.34.0
-	github.com/kitabisa/teler-waf v1.2.0-beta.1
+	github.com/kitabisa/teler-waf v1.2.0-beta.2
 	github.com/mattn/go-colorable v0.1.13
 )
 
@@ -65,6 +65,7 @@ require (
 	github.com/saintfish/chardet v0.0.0-20230101081208-5e3ef4b5456d // indirect
 	github.com/samber/lo v1.38.1 // indirect
 	github.com/scorpionknifes/go-pcre v0.0.0-20210805092536-77486363b797 // indirect
+	github.com/sourcegraph/conc v0.3.0 // indirect
 	github.com/twharmon/gouid v0.5.2 // indirect
 	github.com/ulikunitz/xz v0.5.11 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
