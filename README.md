@@ -141,6 +141,9 @@ teler-proxy -h
 
 The configuration is provides a comprehensive set of options to fine-tune and tailor the behavior of the teler Web Application Firewall (WAF). Through the use of the teler WAF configuration (`-c`/`--conf`), you gain full control over how the WAF operates and responds to incoming traffic.
 
+> **Warning**
+> When you supply a configuration file and subsequently make alterations to that configuration, teler Proxy will promptly initiate a live reload, ensuring that the updated settings are applied in real-time without the need for manual intervention or restarting the teler Proxy.
+
 In case you opt not to provide a custom configuration file, the teler WAF will seamlessly apply a default configuration, ensuring that your application remains protected with sensible and reasonable settings.
 
 The default configuration options are presented below in YAML format:
