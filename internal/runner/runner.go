@@ -25,9 +25,8 @@ type Runner struct {
 	*cron.Cron
 	*http.Server
 
-	shuttingDown bool
-	shutdownLock sync.Mutex
-	telerOpts    teler.Options
+	shutdown  shutdown
+	telerOpts teler.Options
 	watcher
 }
 
@@ -74,6 +73,7 @@ func New(opt *common.Options) error {
 
 	run.Server = server
 	run.telerOpts = tun.Options
+	run.shutdown.Once = new(sync.Once)
 
 	if run.shouldCron() && run.Cron == nil {
 		w, err := fsnotify.NewWatcher()
@@ -145,27 +145,23 @@ func (r *Runner) start() error {
 	return nil
 }
 
-func (r *Runner) shutdown() error {
-	r.shutdownLock.Lock()
-	defer r.shutdownLock.Unlock()
+func (r *Runner) stop() error {
+	r.shutdown.Do(func() {
+		r.Options.Logger.Info("Gracefully shutdown...")
 
-	if r.shuttingDown {
-		return nil
-	}
-	r.shuttingDown = true
+		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+		defer cancel()
 
-	r.Options.Logger.Info("Gracefully shutdown...")
+		r.shutdown.err = r.Server.Shutdown(ctx)
+	})
 
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-	defer cancel()
-
-	return r.Server.Shutdown(ctx)
+	return r.shutdown.err
 }
 
 func (r *Runner) restart() error {
 	r.Options.Logger.Info("Restarting...")
 
-	if err := r.shutdown(); err != nil {
+	if err := r.stop(); err != nil {
 		return err
 	}
 
@@ -177,7 +173,7 @@ func (r *Runner) notify(sigCh chan os.Signal) error {
 
 	switch sig {
 	case syscall.SIGINT, syscall.SIGTERM:
-		return r.shutdown()
+		return r.stop()
 	case syscall.SIGHUP:
 		return r.restart()
 	}
