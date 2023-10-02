@@ -56,7 +56,7 @@ func isReachable(inputURL string, timeout time.Duration) bool {
 
 func (r *Runner) shouldCron() bool {
 	if r.Options.Config.Path == "" {
-		return false
+		return true
 	}
 
 	opt := r.telerOpts
