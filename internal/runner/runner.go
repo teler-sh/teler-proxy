@@ -51,6 +51,8 @@ func New(opt *common.Options) error {
 
 		defer w.Close()
 		run.watcher.config = w
+	} else {
+		run.watcher.config = new(fsnotify.Watcher)
 	}
 
 	dest := buildDest(opt.Destination)
@@ -94,6 +96,8 @@ func New(opt *common.Options) error {
 		if err := run.cron(); err != nil {
 			opt.Logger.Fatal(errSomething, "err", err)
 		}
+	} else {
+		run.watcher.datasets = new(fsnotify.Watcher)
 	}
 
 	go func() {
