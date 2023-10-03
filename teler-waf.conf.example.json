@@ -13,5 +13,6 @@
   "no_update_check": false,
   "development": false,
   "in_memory": false,
-  "falcosidekick_url": ""
+  "falcosidekick_url": "",
+  "verbose": false
 }

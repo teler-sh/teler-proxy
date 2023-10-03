@@ -35,6 +35,7 @@ https://github.com/kitabisa/teler-proxy/assets/25837540/340dd31f-9686-4935-8522-
   * [Development](#development)
   * [In Memory](#in-memory)
   * [FalcoSidekick URL](#falcosidekick-url)
+  * [Verbose](#verbose)
 * [Demo](#demo)
 * [Community](#community)
 * [License](#license)
@@ -163,6 +164,7 @@ no_update_check: false
 development: false
 in_memory: false
 falcosidekick_url: ""
+verbose: false
 ```
 
 Or the equivalent in JSON format:
@@ -183,7 +185,8 @@ Or the equivalent in JSON format:
   "no_update_check": false,
   "development": false,
   "in_memory": false,
-  "falcosidekick_url": ""
+  "falcosidekick_url": "",
+  "verbose": false
 }
 ```
 
@@ -255,6 +258,10 @@ When set to `true`, the threat dataset will be loaded into memory, which can be 
 FalcoSidekick URL (**falcosidekick_url**) is the URL of the FalcoSidekick endpoint to which teler-waf's events will be forwarded.
 
 This field should be set to the URL of your FalcoSidekick instance, including the protocol & port (e.g. "http://localhost:2801"). Please refer to the [docs](https://github.com/kitabisa/teler-waf#falco-sidekick).
+
+### Verbose
+
+Verbose (**verbose**) is a boolean flag that controls whether verbose logging is enabled. When set to `true`, it enables detailed and informative logging messages.
 
 ## Demo
 
