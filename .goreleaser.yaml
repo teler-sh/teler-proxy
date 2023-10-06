@@ -1,0 +1,122 @@
+env:
+  - CGO_ENABLED=1
+
+before:
+  hooks:
+    - go mod tidy
+
+release:
+  prerelease: auto
+
+builds:
+  - id: teler-proxy_darwin-amd64
+    binary: teler-proxy
+    main: ./cmd/teler-proxy
+    goarch:
+      - amd64
+    goos:
+      - darwin
+    env:
+      - CC=o64-clang
+      - CXX=o64-clang++
+    flags:
+      - -trimpath
+      - -pgo=default.pgo
+    ldflags:
+      - -s -w -X github.com/kitabisa/teler-proxy/common.Version={{ .Version }}
+
+  - id: teler-proxy_darwin-arm64
+    binary: teler-proxy
+    main: ./cmd/teler-proxy
+    goarch:
+      - arm64
+    goos:
+      - darwin
+    env:
+      - CC=oa64-clang
+      - CXX=oa64-clang++
+    flags:
+      - -trimpath
+      - -pgo=default.pgo
+    ldflags:
+      - -s -w -X github.com/kitabisa/teler-proxy/common.Version={{ .Version }}
+
+  - id: teler-proxy_linux-amd64
+    binary: teler-proxy
+    main: ./cmd/teler-proxy
+    env:
+      - CC=x86_64-linux-gnu-gcc
+      - CXX=x86_64-linux-gnu-g++
+    goarch:
+      - amd64
+    goos:
+      - linux
+    flags:
+      - -trimpath
+      - -pgo=default.pgo
+    ldflags:
+      - -s -w -X github.com/kitabisa/teler-proxy/common.Version={{ .Version }}
+
+  - id: teler-proxy_linux-arm64
+    binary: teler-proxy
+    main: ./cmd/teler-proxy
+    goarch:
+      - arm64
+    goos:
+      - linux
+    env:
+      - CC=aarch64-linux-gnu-gcc
+      - CXX=aarch64-linux-gnu-g++
+    flags:
+      - -trimpath
+      - -pgo=default.pgo
+    ldflags:
+      - -s -w -X github.com/kitabisa/teler-proxy/common.Version={{ .Version }}
+
+  - id: teler-proxy_windows-amd64
+    binary: teler-proxy
+    main: ./cmd/teler-proxy
+    goarch:
+      - amd64
+    goos:
+      - windows
+    env:
+      - CC=x86_64-w64-mingw32-gcc
+      - CXX=x86_64-w64-mingw32-g++
+    flags:
+      - -trimpath
+      - -pgo=default.pgo
+      - -buildmode=exe
+    ldflags:
+      - -s -w -X github.com/kitabisa/teler-proxy/common.Version={{ .Version }}
+
+universal_binaries:
+  - id: teler-proxy_darwin-universal
+    ids:
+      - teler-proxy_darwin-amd64
+      - teler-proxy_darwin-arm64
+    replace: true
+    name_template: "teler-proxy"
+
+archives:
+  - id: build
+    builds:
+      - teler-proxy_darwin-universal
+      - teler-proxy_linux-amd64
+      - teler-proxy_linux-arm64
+      - teler-proxy_windows-amd64
+    name_template: "teler-proxy_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    wrap_in_directory: false
+    files:
+      - "LICENSE*"
+      - "README*"
+      - "NOTICE"
+      - "teler-waf.conf.example.*"
+    format: zip
+
+checksum:
+  name_template: 'checksums.txt'
+snapshot:
+  name_template: "{{ incpatch .Version }}-next"
+changelog:
+  sort: asc

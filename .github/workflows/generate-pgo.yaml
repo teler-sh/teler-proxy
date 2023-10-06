@@ -1,0 +1,39 @@
+name: "Generate PGO"
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "pkg/tunnel/**.go"
+      - "go.*"
+  workflow_dispatch:
+
+env:
+  PGO_FILE: "default.pgo"
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-go@v4
+        with:
+          go-version: 'stable'
+      - run: go mod download
+      - run: |
+          sudo python3 -m http.server 80 &> /dev/null &
+          echo "pid=$!" >> "$GITHUB_OUTPUT"
+        id: server
+      - run: |
+          make pprof
+          kill -9 ${{ steps.server.outputs.pid }}
+          echo "changes=$(git status -s ${{ env.PGO_FILE }} | wc -l)" >> "$GITHUB_OUTPUT"
+        id: pprof
+      - if: ${{ steps.pprof.outputs.changes > 0 }}
+        run: |
+          git config --local user.email "ghost@users.noreply.github.com"
+          git config --local user.name "ghost"
+          git add ${{ env.PGO_FILE }}
+          git commit -m "build(pgo): generate default PGO profile :robot:"
+          git push origin ${{ github.ref_name }}

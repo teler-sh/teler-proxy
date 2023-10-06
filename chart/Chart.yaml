@@ -1,0 +1,9 @@
+apiVersion: v2
+name: teler-proxy
+description: >-
+  A Helm chart for teler Proxy that enabling seamless integration
+  with teler WAF to protect locally running web service against a
+  variety of web-based attacks.
+type: application
+version: 0.0.1 # chart version
+appVersion: "v0.0.1" # teler-proxy version
