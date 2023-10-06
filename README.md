@@ -11,7 +11,7 @@ teler Proxy enabling seamless integration with [teler WAF](https://github.com/ki
 * [kitabisa/teler](https://github.com/kitabisa/teler): Real-time HTTP Intrusion Detection.
 * [kitabisa/teler-waf](https://github.com/kitabisa/teler-waf): Go HTTP middleware that provides teler IDS functionality.
 
-https://github.com/kitabisa/teler-proxy/assets/25837540/340dd31f-9686-4935-8522-806d95e815e1
+https://github.com/kitabisa/teler-proxy/assets/25837540/df36af09-080a-4cff-98d8-fd2071f602fa
 
 ---
 
@@ -119,7 +119,7 @@ teler-proxy -d <ADDR>:<PORT> [OPTIONS...]
 
 ### Options
 
-<img src="https://github.com/kitabisa/teler-proxy/assets/25837540/e166b479-9a7a-4ea4-923e-3a6867e4e3fa" width="75%">
+<img src="https://github.com/kitabisa/teler-proxy/assets/25837540/caed92a2-a88b-4708-aa5b-70dc49d84aee" width="50%">
 
 Here are all the options it supports.
 
