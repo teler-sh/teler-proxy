@@ -1,4 +1,4 @@
-FROM golang:1.19-alpine AS build
+FROM golang:alpine AS build
 
 ARG VERSION="docker"
 ARG LDFLAGS="-s -w -X github.com/kitabisa/teler-proxy/common.Version=${VERSION}"
@@ -9,13 +9,15 @@ LABEL repository="https://github.com/kitabisa/teler-proxy"
 LABEL maintainer="dwisiswant0"
 
 WORKDIR /app
-COPY ./go.mod .
+COPY ["go.mod", "."]
+COPY ["${PGO_FILE}", "./default.pgo"]
 RUN go mod download
 
 RUN apk add build-base
 
 COPY . .
-RUN CGO_ENABLED="1" go build -pgo "${PGO_FILE}" -ldflags "${LDFLAGS}" \
+RUN CGO_ENABLED="1" go build \
+	-pgo "default.pgo" -ldflags "${LDFLAGS}" \
 	-o ./bin/teler-proxy ./cmd/teler-proxy
 
 FROM alpine:latest
