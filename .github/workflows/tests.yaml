@@ -38,7 +38,12 @@ jobs:
       - uses: actions/setup-go@v4
         with:
           go-version: 'stable'
+      - run: |
+          sudo python3 -m http.server 80 &> /dev/null &
+          echo "pid=$!" >> "$GITHUB_OUTPUT"
+        id: server
       - run: make cover
+      - run: kill -9 ${{ steps.server.outputs.pid }}
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
