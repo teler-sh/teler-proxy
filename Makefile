@@ -16,8 +16,9 @@ bench:
 	go test ./pkg/tunnel/... -run "^$$" -bench . -cpu 4 -benchmem $(ARGS)
 
 cover: FILE := /tmp/teler-coverage.out # Define coverage file
-cover: ## Runs the tests and check & view the test coverage
-	go test -race -coverprofile=$(FILE) -covermode=atomic ./...
+cover: PKG := ./pkg/tunnel/...
+cover:
+	go test -race -coverprofile=$(FILE) -covermode=atomic $(PKG)
 	go tool cover -func=$(FILE)
 
 pprof: ARGS := -cpuprofile=cpu.out -memprofile=mem.out -benchtime 30s
