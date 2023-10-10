@@ -1,6 +1,10 @@
 # teler Proxy
 
 [![Kitabisa Security](https://img.shields.io/badge/kitabisa-security%20project-blue)](#)
+[![codecov](https://codecov.io/github/kitabisa/teler-proxy/graph/badge.svg?token=QST60Y6BDD)](https://codecov.io/github/kitabisa/teler-proxy)
+[![Tests](https://github.com/kitabisa/teler-proxy/actions/workflows/tests.yaml/badge.svg?branch=master)](https://github.com/kitabisa/teler-proxy/actions/workflows/tests.yaml)
+[![Release](https://img.shields.io/github/v/release/kitabisa/teler-proxy?color=violet)](https://github.com/kitabisa/teler-proxy/releases)
+[![Platform](https://img.shields.io/badge/platform-osx%2Flinux%2Fwindows-blueviolet)](#)
 
 <img src="https://user-images.githubusercontent.com/25837540/97091757-7200d880-1668-11eb-82c4-e5c4971d2bc8.png" align="right" width="250px"/>
 
