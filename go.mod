@@ -6,7 +6,7 @@ require (
 	github.com/charmbracelet/log v0.2.4
 	github.com/fsnotify/fsnotify v1.6.0
 	github.com/go-co-op/gocron v1.34.0
-	github.com/kitabisa/teler-waf v1.2.0
+	github.com/kitabisa/teler-waf v1.2.1
 	github.com/mattn/go-colorable v0.1.13
 )
 
