@@ -22,12 +22,7 @@ jobs:
           go-version: 'stable'
       - run: go mod download
       - run: |
-          sudo python3 -m http.server 80 &> /dev/null &
-          echo "pid=$!" >> "$GITHUB_OUTPUT"
-        id: server
-      - run: |
           make pprof
-          kill -9 ${{ steps.server.outputs.pid }}
           echo "changes=$(git status -s ${{ env.PGO_FILE }} | wc -l)" >> "$GITHUB_OUTPUT"
         id: pprof
       - if: ${{ steps.pprof.outputs.changes > 0 }}
