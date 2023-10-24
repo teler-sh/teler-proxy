@@ -18,6 +18,10 @@ var (
 	cwd, workspaceDir string
 
 	dest = "http://example.com"
+
+	handler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+	})
 )
 
 func init() {
@@ -103,7 +107,10 @@ func TestNewTunnel(t *testing.T) {
 }
 
 func TestServeHTTP(t *testing.T) {
-	parsedURL, _ := url.Parse("http://localhost")
+	ts := httptest.NewServer(handler)
+	defer ts.Close()
+
+	parsedURL, _ := url.Parse(ts.URL)
 	mockReverseProxy := httputil.NewSingleHostReverseProxy(parsedURL)
 
 	tunnel := &Tunnel{
@@ -152,7 +159,10 @@ func BenchmarkNewTunnel(b *testing.B) {
 }
 
 func BenchmarkServeHTTP(b *testing.B) {
-	parsedURL, _ := url.Parse("http://localhost")
+	ts := httptest.NewServer(handler)
+	defer ts.Close()
+
+	parsedURL, _ := url.Parse(ts.URL)
 	mockReverseProxy := httputil.NewSingleHostReverseProxy(parsedURL)
 
 	tunnel := &Tunnel{
