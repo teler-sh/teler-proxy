@@ -1,9 +1,10 @@
-package runner
+package writer
 
 import (
 	"encoding/json"
 
 	"github.com/charmbracelet/log"
+	"github.com/kitabisa/teler-proxy/internal/logger"
 )
 
 type Writer interface {
@@ -16,9 +17,9 @@ type logWriter struct {
 
 type data map[string]any
 
-func (r *Runner) NewWriter() *logWriter {
+func New() *logWriter {
 	w := new(logWriter)
-	w.Logger = r.Options.Logger.WithPrefix("teler-waf")
+	w.Logger = logger.New().WithPrefix("teler-waf")
 
 	return w
 }
