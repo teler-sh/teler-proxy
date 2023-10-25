@@ -58,13 +58,12 @@ func (w *logWriter) write(d data) error {
 }
 
 func (w *logWriter) writeDebug(d data) {
-	w.Debug(d["msg"], "ts", d["ts"])
+	w.Debug(d["msg"])
 }
 
 func (w *logWriter) writeInfo(d data) {
 	if opt, ok := d["options"].(data); ok {
 		w.Info(d["msg"],
-			"ts", d["ts"],
 			"options", opt,
 		)
 	}
@@ -72,7 +71,6 @@ func (w *logWriter) writeInfo(d data) {
 
 func (w *logWriter) writeWarn(d data, r []byte) {
 	w.Warn(d["msg"],
-		"ts", d["ts"],
 		"id", d["id"],
 		"threat", d["category"],
 		"request", string(r),
@@ -81,7 +79,6 @@ func (w *logWriter) writeWarn(d data, r []byte) {
 
 func (w *logWriter) writeError(d data) {
 	w.Error(d["msg"],
-		"ts", d["ts"],
 		"source", d["caller"],
 	)
 }
