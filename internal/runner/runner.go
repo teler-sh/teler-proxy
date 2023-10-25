@@ -16,7 +16,6 @@ import (
 	"github.com/kitabisa/teler-proxy/common"
 	"github.com/kitabisa/teler-proxy/internal/cron"
 	"github.com/kitabisa/teler-proxy/internal/writer"
-	"github.com/kitabisa/teler-proxy/pkg/tunnel"
 	"github.com/kitabisa/teler-waf"
 	"github.com/kitabisa/teler-waf/threat"
 )
@@ -56,8 +55,9 @@ func New(opt *common.Options) error {
 	}
 
 	dest := buildDest(opt.Destination)
+	writer := writer.New()
 
-	tun, err := tunnel.NewTunnel(opt.Port, dest, opt.Config.Path, opt.Config.Format, writer.New())
+	tun, err := run.createTunnel(dest, writer)
 	if err != nil {
 		return err
 	}

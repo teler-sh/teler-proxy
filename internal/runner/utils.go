@@ -2,11 +2,14 @@ package runner
 
 import (
 	"fmt"
+	"io"
 	"net"
 	"strings"
 	"time"
 
 	"net/url"
+
+	"github.com/kitabisa/teler-proxy/pkg/tunnel"
 )
 
 func parseURL(dest string) (*url.URL, error) {
@@ -66,4 +69,10 @@ func (r *Runner) shouldCron() bool {
 	}
 
 	return false
+}
+
+func (r *Runner) createTunnel(dest string, writer io.Writer) (*tunnel.Tunnel, error) {
+	opt := r.Options
+
+	return tunnel.NewTunnel(opt.Port, dest, opt.Config.Path, opt.Config.Format, writer)
 }
