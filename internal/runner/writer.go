@@ -16,6 +16,13 @@ type logWriter struct {
 
 type data map[string]any
 
+func (r *Runner) NewWriter() *logWriter {
+	w := new(logWriter)
+	w.Logger = r.Options.Logger.WithPrefix("teler-waf")
+
+	return w
+}
+
 func (w *logWriter) Write(p []byte) (n int, err error) {
 	var d data
 
@@ -26,9 +33,7 @@ func (w *logWriter) Write(p []byte) (n int, err error) {
 		return 0, err
 	}
 
-	logger := w.WithPrefix("teler-waf")
-	w.Logger = logger
-	w.Logger.With("ts", d["ts"])
+	w.Logger = w.With("ts", d["ts"])
 
 	err = w.write(d)
 

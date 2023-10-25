@@ -55,7 +55,7 @@ func New(opt *common.Options) error {
 	}
 
 	dest := buildDest(opt.Destination)
-	writer := &logWriter{Logger: opt.Logger}
+	writer := run.NewWriter()
 
 	tun, err := tunnel.NewTunnel(opt.Port, dest, opt.Config.Path, opt.Config.Format, writer)
 	if err != nil {
