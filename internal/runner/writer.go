@@ -28,26 +28,33 @@ func (w *logWriter) Write(p []byte) (n int, err error) {
 
 	logger := w.WithPrefix("teler-waf")
 	w.Logger = logger
+	w.Logger.With("ts", d["ts"])
 
-	w.Logger.With("ts", d["ts"], "msg", d["msg"])
-	w.write(d)
+	err = w.write(d)
 
 	return
 }
 
-func (w *logWriter) write(d data) {
+func (w *logWriter) write(d data) error {
 	switch level := d["level"].(string); level {
 	case "debug":
 		w.writeDebug(d)
 	case "info":
 		w.writeInfo(d)
 	case "warn":
-		w.writeWarn(d)
+		r, err := json.Marshal(d["request"])
+		if err != nil {
+			return err
+		}
+
+		w.writeWarn(d, r)
 	case "error":
 		w.writeError(d)
 	case "fatal":
 		w.writeFatal(d)
 	}
+
+	return nil
 }
 
 func (w *logWriter) writeDebug(d data) {
@@ -63,12 +70,12 @@ func (w *logWriter) writeInfo(d data) {
 	}
 }
 
-func (w *logWriter) writeWarn(d data) {
+func (w *logWriter) writeWarn(d data, r []byte) {
 	w.Warn(d["msg"],
 		"ts", d["ts"],
 		"id", d["id"],
 		"threat", d["category"],
-		"request", d["request"],
+		"request", string(r),
 	)
 }
 
