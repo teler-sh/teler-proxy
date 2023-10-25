@@ -6,7 +6,7 @@ require (
 	github.com/charmbracelet/lipgloss v0.9.1
 	github.com/charmbracelet/log v0.2.4
 	github.com/fsnotify/fsnotify v1.6.0
-	github.com/go-co-op/gocron v1.34.0
+	github.com/go-co-op/gocron v1.35.2
 	github.com/kitabisa/teler-waf v1.2.2
 	github.com/mattn/go-colorable v0.1.13
 )
