@@ -3,10 +3,11 @@ module github.com/kitabisa/teler-proxy
 go 1.19
 
 require (
+	github.com/charmbracelet/lipgloss v0.9.1
 	github.com/charmbracelet/log v0.2.4
 	github.com/fsnotify/fsnotify v1.6.0
 	github.com/go-co-op/gocron v1.34.0
-	github.com/kitabisa/teler-waf v1.2.1
+	github.com/kitabisa/teler-waf v1.2.2
 	github.com/mattn/go-colorable v0.1.13
 )
 
@@ -22,7 +23,6 @@ require (
 	github.com/aymerick/douceur v0.2.0 // indirect
 	github.com/bgentry/go-netrc v0.0.0-20140422174119-9fd32a8b3d3d // indirect
 	github.com/bitfield/script v0.22.0 // indirect
-	github.com/charmbracelet/lipgloss v0.9.1 // indirect
 	github.com/daniel-hutao/spinlock v0.1.0 // indirect
 	github.com/dwisiswant0/clientip v0.3.0 // indirect
 	github.com/gabriel-vasile/mimetype v1.4.2 // indirect
