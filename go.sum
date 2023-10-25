@@ -388,8 +388,6 @@ github.com/jmespath/go-jmespath/internal/testify v1.5.1/go.mod h1:L3OGu8Wl2/fWfC
 github.com/jstemmer/go-junit-report v0.0.0-20190106144839-af01ea7f8024/go.mod h1:6v2b51hI/fHJwM22ozAgKL4VKDeJcHhJFhtBdhmNjmU=
 github.com/jstemmer/go-junit-report v0.9.1/go.mod h1:Brl9GWCQeLvo8nXZwPNNblvFj/XSXhF0NWZEnDohbsk=
 github.com/kisielk/gotool v1.0.0/go.mod h1:XhKaO+MFFWcvkIS/tQcRk01m1F5IRFswLeQ+oQHNcck=
-github.com/kitabisa/teler-waf v1.2.0 h1:nSRMSYDWiuNzZn5uYuOSVQMIlAB5wQ3+9AFl9fgEd4g=
-github.com/kitabisa/teler-waf v1.2.0/go.mod h1:xMwo8ofn4Mb9AvPGcR6CxoZhmn4tIKoWX3wYlyNv0XM=
 github.com/kitabisa/teler-waf v1.2.1 h1:mxQxrY0u/RleVQHpSPWeVWQ3tsdpm/Lej1bmX2minHE=
 github.com/kitabisa/teler-waf v1.2.1/go.mod h1:xMwo8ofn4Mb9AvPGcR6CxoZhmn4tIKoWX3wYlyNv0XM=
 github.com/klauspost/compress v1.15.11/go.mod h1:QPwzmACJjUTFsnSHH934V6woptycfrDDJnH7hvFVbGM=
