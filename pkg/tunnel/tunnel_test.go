@@ -37,79 +37,94 @@ func init() {
 
 func TestNewTunnel(t *testing.T) {
 	// Test case 1: valid destination and no configuration file
-	tun, err := NewTunnel(8080, dest, "", "", nil)
-	if err != nil {
-		t.Fatalf("Expected no error, but got: %v", err)
-	}
+	t.Run("Valid Destination & No Config File", func(t *testing.T) {
+		tun, err := NewTunnel(8080, dest, "", "", nil)
+		if err != nil {
+			t.Fatalf("Expected no error, but got: %v", err)
+		}
 
-	if tun == nil {
-		t.Fatal("Expected Tunnel instance, but got nil")
-	}
+		if tun == nil {
+			t.Fatal("Expected Tunnel instance, but got nil")
+		}
+	})
 
 	// Test case 2: invalid destination (empty)
-	_, err = NewTunnel(8080, "", "", "", nil)
-	if err != common.ErrDestAddressEmpty {
-		t.Fatalf("Expected %v, but got: %v", common.ErrDestAddressEmpty, err)
-	}
+	t.Run("Invalid Destination", func(t *testing.T) {
+		_, err := NewTunnel(8080, "", "", "", nil)
+		if err != common.ErrDestAddressEmpty {
+			t.Fatalf("Expected %v, but got: %v", common.ErrDestAddressEmpty, err)
+		}
+	})
 
 	// Test case 3: with config file but empty format
-	_, err = NewTunnel(8080, dest, filepath.Join(workspaceDir, "teler-waf.conf.example.yaml"), "", nil)
-	if err != common.ErrCfgFileFormatUnd {
-		t.Fatalf("Expected %v, but got: %v", common.ErrCfgFileFormatUnd, err)
-	}
+	t.Run("With Config File but Empty Format", func(t *testing.T) {
+		_, err := NewTunnel(8080, dest, filepath.Join(workspaceDir, "teler-waf.conf.example.yaml"), "", nil)
+		if err != common.ErrCfgFileFormatUnd {
+			t.Fatalf("Expected %v, but got: %v", common.ErrCfgFileFormatUnd, err)
+		}
+	})
 
 	// Test case 4: with config file and YAML format
-	tun = nil
-	tun, err = NewTunnel(8080, dest, filepath.Join(workspaceDir, "teler-waf.conf.example.yaml"), "yaml", nil)
-	if err != nil {
-		t.Fatalf("Expected no error, but got: %v", err)
-	}
-
-	if tun == nil {
-		t.Fatal("Expected Tunnel instance, but got nil")
-	}
+	t.Run("With Config File and YAML Format", func(t *testing.T) {
+		tun, err := NewTunnel(8080, dest, filepath.Join(workspaceDir, "teler-waf.conf.example.yaml"), "yaml", nil)
+		if err != nil {
+			t.Fatalf("Expected no error, but got: %v", err)
+		}
+		if tun == nil {
+			t.Fatal("Expected Tunnel instance, but got nil")
+		}
+	})
 
 	// Test case 5: with config file and JSON format
-	tun = nil
-	tun, err = NewTunnel(8080, dest, filepath.Join(workspaceDir, "teler-waf.conf.example.json"), "json", nil)
-	if err != nil {
-		t.Fatalf("Expected no error, but got: %v", err)
-	}
-
-	if tun == nil {
-		t.Fatal("Expected Tunnel instance, but got nil")
-	}
+	t.Run("With Config File and JSON Format", func(t *testing.T) {
+		tun, err := NewTunnel(8080, dest, filepath.Join(workspaceDir, "teler-waf.conf.example.json"), "json", nil)
+		if err != nil {
+			t.Fatalf("Expected no error, but got: %v", err)
+		}
+		if tun == nil {
+			t.Fatal("Expected Tunnel instance, but got nil")
+		}
+	})
 
 	// Test case 6: with config file and xml format
-	_, err = NewTunnel(8080, dest, filepath.Join(workspaceDir, "teler-waf.conf.example.json"), "xml", nil)
-	if err != common.ErrCfgFileFormatInv {
-		t.Fatalf("Expected %v, but got: %v", common.ErrCfgFileFormatInv, err)
-	}
+	t.Run("With Config File and XML Format", func(t *testing.T) {
+		_, err := NewTunnel(8080, dest, filepath.Join(workspaceDir, "teler-waf.conf.example.json"), "xml", nil)
+		if err != common.ErrCfgFileFormatInv {
+			t.Fatalf("Expected %v, but got: %v", common.ErrCfgFileFormatInv, err)
+		}
+	})
 
 	// Test case 7: invalid destination
-	tun = nil
-	tun, _ = NewTunnel(8080, "http://this is not a valid URL", "", "", nil)
-	if tun != nil {
-		t.Fatalf("Expected %v, but got: %v", nil, tun)
-	}
+	t.Run("Invalid Destination", func(t *testing.T) {
+		tun, _ := NewTunnel(8080, "http://this is not a valid URL", "", "", nil)
+		if tun != nil {
+			t.Fatalf("Expected %v, but got: %v", nil, tun)
+		}
+	})
 
 	// Test case 8: with invalid config file
-	_, err = NewTunnel(8080, dest, "nonexistent", "yaml", nil)
-	if err == nil {
-		t.Fatal("Expected error, but got nil")
-	}
+	t.Run("Invalid YAML Config File", func(t *testing.T) {
+		_, err := NewTunnel(8080, dest, "nonexistent", "yaml", nil)
+		if err == nil {
+			t.Fatal("Expected error, but got nil")
+		}
+	})
 
 	// Test case 9: with invalid config file
-	_, err = NewTunnel(8080, dest, "nonexistent", "json", nil)
-	if err == nil {
-		t.Fatal("Expected no error, but got nil")
-	}
+	t.Run("Invalid JSON Config File", func(t *testing.T) {
+		_, err := NewTunnel(8080, dest, "nonexistent", "json", nil)
+		if err == nil {
+			t.Fatal("Expected no error, but got nil")
+		}
+	})
 
 	// Test case 10: with io.Writer
-	_, err = NewTunnel(8080, dest, "nonexistent", "json", os.Stderr)
-	if err == nil {
-		t.Fatal("Expected no error, but got nil")
-	}
+	t.Run("With Writer", func(t *testing.T) {
+		_, err := NewTunnel(8080, dest, filepath.Join(workspaceDir, "teler-waf.conf.example.yaml"), "yaml", os.Stderr)
+		if err != nil {
+			t.Fatalf("Expected no error, but got: %v", err)
+		}
+	})
 }
 
 func TestServeHTTP(t *testing.T) {
