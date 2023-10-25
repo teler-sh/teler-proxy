@@ -3,11 +3,9 @@ package runner
 import (
 	"flag"
 	"os"
-	"time"
 
-	"github.com/charmbracelet/log"
 	"github.com/kitabisa/teler-proxy/common"
-	"github.com/mattn/go-colorable"
+	"github.com/kitabisa/teler-proxy/internal/logger"
 )
 
 func ParseOptions() *common.Options {
@@ -15,13 +13,7 @@ func ParseOptions() *common.Options {
 	cfg := &common.Config{}
 	tls := &common.TLS{}
 
-	opt.Logger = log.NewWithOptions(
-		colorable.NewColorableStderr(),
-		log.Options{
-			ReportTimestamp: true,
-			TimeFormat:      time.Kitchen,
-		},
-	)
+	opt.Logger = logger.New()
 
 	flag.IntVar(&opt.Port, "p", 1337, "")
 	flag.IntVar(&opt.Port, "port", 1337, "")

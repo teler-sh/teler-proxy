@@ -15,6 +15,7 @@ import (
 	"github.com/fsnotify/fsnotify"
 	"github.com/kitabisa/teler-proxy/common"
 	"github.com/kitabisa/teler-proxy/internal/cron"
+	"github.com/kitabisa/teler-proxy/internal/writer"
 	"github.com/kitabisa/teler-proxy/pkg/tunnel"
 	"github.com/kitabisa/teler-waf"
 	"github.com/kitabisa/teler-waf/threat"
@@ -55,9 +56,8 @@ func New(opt *common.Options) error {
 	}
 
 	dest := buildDest(opt.Destination)
-	writer := run.NewWriter()
 
-	tun, err := tunnel.NewTunnel(opt.Port, dest, opt.Config.Path, opt.Config.Format, writer)
+	tun, err := tunnel.NewTunnel(opt.Port, dest, opt.Config.Path, opt.Config.Format, writer.New())
 	if err != nil {
 		return err
 	}
