@@ -1,6 +1,10 @@
 package cron
 
-import "github.com/kitabisa/teler-waf/threat"
+import (
+	"os"
+
+	"github.com/kitabisa/teler-waf/threat"
+)
 
 var task = func() error {
 	updated, err := threat.IsUpdated()
@@ -9,8 +13,12 @@ var task = func() error {
 	}
 
 	if !updated {
-		err = threat.Get()
+		path, err := threat.Location()
 		if err != nil {
+			return err
+		}
+
+		if err = os.RemoveAll(path); err != nil {
 			return err
 		}
 	}
