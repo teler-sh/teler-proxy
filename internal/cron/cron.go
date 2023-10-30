@@ -14,13 +14,13 @@ type Cron struct {
 func New() (*Cron, error) {
 	c := new(Cron)
 
-	tz, err := time.LoadLocation("Local")
+	tz, err := time.LoadLocation("UTC")
 	if err != nil {
 		return c, err
 	}
 
 	c.Scheduler = gocron.NewScheduler(tz)
-	c.Job, err = c.Scheduler.Every(1).Day().At("00:00").WaitForSchedule().Do(task)
+	c.Job, err = c.Scheduler.Every(1).Day().At("00:10").WaitForSchedule().Do(task)
 
 	return c, err
 }
