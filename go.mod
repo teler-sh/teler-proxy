@@ -6,7 +6,7 @@ require (
 	github.com/charmbracelet/lipgloss v0.9.1
 	github.com/charmbracelet/log v0.2.4
 	github.com/fsnotify/fsnotify v1.6.0
-	github.com/go-co-op/gocron v1.34.0
+	github.com/go-co-op/gocron v1.36.0
 	github.com/kitabisa/teler-waf v1.2.2
 	github.com/mattn/go-colorable v0.1.13
 )
@@ -34,7 +34,7 @@ require (
 	github.com/golang/protobuf v1.5.3 // indirect
 	github.com/google/go-cmp v0.5.9 // indirect
 	github.com/google/s2a-go v0.1.4 // indirect
-	github.com/google/uuid v1.3.1 // indirect
+	github.com/google/uuid v1.4.0 // indirect
 	github.com/googleapis/enterprise-certificate-proxy v0.2.5 // indirect
 	github.com/googleapis/gax-go/v2 v2.12.0 // indirect
 	github.com/gorilla/css v1.0.0 // indirect
