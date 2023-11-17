@@ -36,5 +36,5 @@ Happy testing and stay secure!
 
 ---
 
-> **Warning**
+> [!CAUTION]
 > Please note that this is a simplified demonstration of the teler Proxy's capabilities and is intended for testing purposes only. In a real-world scenario, you would integrate the teler Proxy with your web application to enhance security and protect it from potential attacks. For detailed instructions on integrating the teler Proxy with your application, refer to the full documentation available in the main repository.

@@ -92,7 +92,7 @@ CGO_ENABLED=1 go install github.com/kitabisa/teler-proxy/cmd/teler-proxy@latest
 
 Manual building executable from source code:
 
-> **Warning**
+> [!WARNING]
 > The `master` branch contains the latest code changes and updates, which might not have undergone thorough testing and quality assurance - thus, you may encounter instability and unexpected behavior.
 
 ```bash
@@ -102,8 +102,8 @@ cd teler-proxy/
 make build
 ```
 
-> **Note**
-> :bulb: **ProTip**: If you're using Go version 1.20 or newer, you can build the executable file with our automatically generated default PGO<sup>[<a href="https://go.dev/doc/pgo">?</a>]</sup> profile to improve the performance by using `make build-pgo` command.
+> [!TIP]
+> If you're using Go version 1.20 or newer, you can build the executable file with our automatically generated default PGO<sup>[<a href="https://go.dev/doc/pgo">?</a>]</sup> profile to improve the performance by using `make build-pgo` command.
 
 ### Docker
 
@@ -146,7 +146,7 @@ teler-proxy -h
 
 The configuration is provides a comprehensive set of options to fine-tune and tailor the behavior of the teler Web Application Firewall (WAF). Through the use of the teler WAF configuration (`-c`/`--conf`), you gain full control over how the WAF operates and responds to incoming traffic.
 
-> **Warning**
+> [!NOTE]
 > When you supply a configuration file and subsequently make alterations to that configuration, teler Proxy will promptly initiate a live reload, ensuring that the updated settings are applied in real-time without the need for manual intervention or restarting the teler Proxy.
 
 In case you opt not to provide a custom configuration file, the teler WAF will seamlessly apply a default configuration, ensuring that your application remains protected with sensible and reasonable settings.
@@ -198,7 +198,7 @@ By leveraging this versatile teler WAF configuration, you can fine-tune the WAF 
 
 ### Excludes
 
-> **Warning**
+> [!WARNING]
 > Threat exclusions (`Excludes`) will be deprecated in the upcoming teler-waf release (**v2**), use [`Whitelists`](#whitelists) instead. See [teler-waf#73](https://github.com/kitabisa/teler-waf/discussions/73).
 
 Excludes (**excludes**) is a list of threat types (`[]int`) to exclude from the security checks. Please refer to the [docs](https://pkg.go.dev/github.com/kitabisa/teler-waf/threat#Threat).
