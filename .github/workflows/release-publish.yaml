@@ -31,7 +31,7 @@ jobs:
         with:
           ref: "${{ inputs.tag || github.ref_name }}"
 
-      - uses: actions/setup-go@v4
+      - uses: actions/setup-go@v5
         with:
           go-version: 'stable'
 
