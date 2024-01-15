@@ -9,16 +9,21 @@ import (
 )
 
 func New() *log.Logger {
-	log.ValueStyles["id"] = lipgloss.NewStyle().Foreground(lipgloss.Color("86"))
-	log.ValueStyles["threat"] = lipgloss.NewStyle().Foreground(lipgloss.Color("192"))
-	log.ValueStyles["request"] = lipgloss.NewStyle().Foreground(lipgloss.Color("204"))
-	log.ValueStyles["options"] = log.ValueStyles["threat"]
-
-	return log.NewWithOptions(
+	logger := log.NewWithOptions(
 		colorable.NewColorableStderr(),
 		log.Options{
 			ReportTimestamp: true,
 			TimeFormat:      time.DateTime,
 		},
 	)
+
+	styles := log.DefaultStyles()
+	styles.Values["id"] = lipgloss.NewStyle().Foreground(lipgloss.Color("86"))
+	styles.Values["threat"] = lipgloss.NewStyle().Foreground(lipgloss.Color("192"))
+	styles.Values["request"] = lipgloss.NewStyle().Foreground(lipgloss.Color("204"))
+	styles.Values["options"] = styles.Values["threat"]
+
+	logger.SetStyles(styles)
+
+	return logger
 }
