@@ -25,5 +25,7 @@ func New() *log.Logger {
 
 	logger.SetStyles(styles)
 
+	log.TimestampKey = "ts"
+
 	return logger
 }
