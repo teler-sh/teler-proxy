@@ -34,8 +34,6 @@ func (w *logWriter) Write(p []byte) (n int, err error) {
 		return 0, err
 	}
 
-	w.Logger = w.With("ts", d["ts"])
-
 	err = w.write(d)
 
 	return
