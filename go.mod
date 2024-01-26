@@ -7,7 +7,7 @@ require (
 	github.com/charmbracelet/log v0.3.1
 	github.com/fsnotify/fsnotify v1.7.0
 	github.com/go-co-op/gocron v1.34.0
-	github.com/kitabisa/teler-waf v1.2.3
+	github.com/kitabisa/teler-waf v1.2.4
 	github.com/mattn/go-colorable v0.1.13
 )
 
@@ -75,11 +75,11 @@ require (
 	go.uber.org/atomic v1.9.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
 	go.uber.org/zap v1.26.0 // indirect
-	golang.org/x/crypto v0.17.0 // indirect
+	golang.org/x/crypto v0.18.0 // indirect
 	golang.org/x/exp v0.0.0-20231006140011-7918f672742d // indirect
-	golang.org/x/net v0.19.0 // indirect
+	golang.org/x/net v0.20.0 // indirect
 	golang.org/x/oauth2 v0.10.0 // indirect
-	golang.org/x/sys v0.15.0 // indirect
+	golang.org/x/sys v0.16.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
 	golang.org/x/xerrors v0.0.0-20220907171357-04be3eba64a2 // indirect
 	google.golang.org/api v0.130.0 // indirect
