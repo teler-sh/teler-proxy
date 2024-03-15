@@ -103,7 +103,7 @@ make build
 ```
 
 > [!TIP]
-> If you're using Go version 1.20 or newer, you can build the executable file with our automatically generated default PGO<sup>[<a href="https://go.dev/doc/pgo">?</a>]</sup> profile to improve the performance by using `make build-pgo` command.
+> If you're using Go version 1.20 or newer, you can build the executable file with our automatically generated default PGO<sup>[<a href="https://go.dev/doc/pgo">?</a>]</sup> profile _(see [pgo branch](https://github.com/kitabisa/teler-proxy/tree/pgo))_ to improve the performance by using `make build-pgo` command.
 
 ### Docker
 
