@@ -11,6 +11,7 @@ on:
 
 env:
   PGO_FILE: "default.pgo"
+  PGO_BRANCH: "pgo"
 
 jobs:
   tests:
@@ -20,15 +21,18 @@ jobs:
       - uses: actions/setup-go@v5
         with:
           go-version: 'stable'
-      - run: go mod download
+          cache-dependency-path: '**/go.sum'
+      - run: make pprof && cp ${{ env.PGO_FILE }} /tmp/
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ env.PGO_BRANCH }}
       - run: |
-          make pprof
-          echo "changes=$(git status -s ${{ env.PGO_FILE }} | wc -l)" >> "$GITHUB_OUTPUT"
-        id: pprof
-      - if: ${{ steps.pprof.outputs.changes > 0 }}
+          git rm --cached ${{ env.PGO_FILE }}
+          cp /tmp/${{ env.PGO_FILE }} .
+      - if: ${{ success() || failure() }}
         run: |
           git config --local user.email "ghost@users.noreply.github.com"
           git config --local user.name "ghost"
           git add ${{ env.PGO_FILE }}
           git commit -m "build(pgo): generate default PGO profile :robot:"
-          git push origin ${{ github.ref_name }}
+          git push origin ${{ env.PGO_BRANCH }}
