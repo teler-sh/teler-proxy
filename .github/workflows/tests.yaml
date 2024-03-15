@@ -19,7 +19,8 @@ jobs:
       - name: Install Go
         uses: actions/setup-go@v5
         with:
-          go-version: 'stable'
+          go-version-file: 'go.mod'
+          cache-dependency-path: '**/go.sum'
       - uses: actions/checkout@v3
       - name: Vetting
         run: make vet
@@ -37,7 +38,8 @@ jobs:
           fetch-depth: 2
       - uses: actions/setup-go@v5
         with:
-          go-version: 'stable'
+          go-version-file: 'go.mod'
+          cache-dependency-path: '**/go.sum'
       - run: make cover
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
