@@ -26,11 +26,10 @@ jobs:
       - uses: actions/checkout@v3
         with:
           ref: ${{ env.PGO_BRANCH }}
-      - run: |
-          git rm --cached ${{ env.PGO_FILE }}
-          cp /tmp/${{ env.PGO_FILE }} .
+      - run: git rm --cached ${{ env.PGO_FILE }}
       - if: ${{ success() || failure() }}
         run: |
+          cp /tmp/${{ env.PGO_FILE }} .
           git config --local user.email "ghost@users.noreply.github.com"
           git config --local user.name "ghost"
           git add ${{ env.PGO_FILE }}
