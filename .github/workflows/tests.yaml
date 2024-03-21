@@ -16,12 +16,12 @@ jobs:
   tests:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
       - name: Install Go
         uses: actions/setup-go@v5
         with:
           go-version-file: 'go.mod'
           cache-dependency-path: '**/go.sum'
-      - uses: actions/checkout@v3
       - name: Vetting
         run: make vet
       - name: Build
