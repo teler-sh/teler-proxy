@@ -72,3 +72,7 @@ jobs:
   codeql:
     needs: tests
     uses: ./.github/workflows/codeql.yaml
+
+  auto-merge:
+    if: (github.event_name == 'pull_request')
+    uses: ./.github/workflows/auto-merge.yaml
