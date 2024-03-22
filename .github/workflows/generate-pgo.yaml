@@ -14,22 +14,36 @@ env:
   PGO_BRANCH: "pgo"
 
 jobs:
-  tests:
+  generate-pgo:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
       - uses: actions/setup-go@v5
         with:
-          go-version: 'stable'
+          go-version-file: 'go.mod'
           cache-dependency-path: '**/go.sum'
-      - run: make pprof && cp ${{ env.PGO_FILE }} /tmp/
+
+      - run: make pgo && cp ${{ env.PGO_FILE }} /tmp/
+
       - uses: actions/checkout@v3
         with:
           ref: ${{ env.PGO_BRANCH }}
-      - run: git rm --cached ${{ env.PGO_FILE }}
-      - if: ${{ success() || failure() }}
-        run: |
+
+      - run: |
+          git rm --cached ${{ env.PGO_FILE }}
           cp /tmp/${{ env.PGO_FILE }} .
+
+      - uses: actions/upload-artifact@v4
+        if: (success() || failure())
+        with:
+          name: pgo
+          path: ${{ env.PGO_FILE }}
+          retention-days: 90
+          overwrite: true
+
+      - name: pushing PGO file
+        run: |
           git config --local user.email "ghost@users.noreply.github.com"
           git config --local user.name "ghost"
           git add ${{ env.PGO_FILE }}

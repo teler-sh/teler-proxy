@@ -23,7 +23,9 @@ cover:
 
 pprof: ARGS := -cpuprofile=cpu.out -memprofile=mem.out -benchtime 30s
 pprof: bench
-pprof:
+
+pgo: pprof
+pgo:
 	cp cpu.out default.pgo
 
 test:

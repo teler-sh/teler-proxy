@@ -1,0 +1,55 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*.*.**"]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Target tag to release"
+        required: true
+        type: string
+
+env:
+  PGO_FILE: "default.pgo"
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/goreleaser/goreleaser-cross:latest
+    steps:
+      - uses: actions/download-artifact@v4
+        id: artifact
+        with:
+          name: pgo
+        continue-on-error: true
+
+      - uses: actions/checkout@v3
+        if: steps.artifact.outcome != 'success'
+        with:
+          ref: pgo
+
+      - run: cp ${{ env.PGO_FILE }} /tmp
+        if: steps.artifact.outcome != 'success'
+
+      - uses: actions/checkout@v3
+        with:
+          ref: "${{ inputs.tag || github.ref_name }}"
+
+      - run: cp /tmp/${{ env.PGO_FILE }} .
+        if: steps.artifact.outcome != 'success'
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: 'go.mod'
+          cache-dependency-path: '**/go.sum'
+
+      - name: Build PGO file
+        run: '[ -f "${{ env.PGO_FILE }}" ] || make pgo'
+
+      - run: git config --global --add safe.directory "$(pwd)"
+
+      - run: goreleaser release --clean
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"

@@ -1,5 +1,6 @@
 env:
   - CGO_ENABLED=1
+  - PGO_FILE=default.pgo
 
 before:
   hooks:
@@ -9,9 +10,9 @@ release:
   prerelease: auto
 
 builds:
-  - id: teler-proxy_darwin-amd64
-    binary: teler-proxy
-    main: ./cmd/teler-proxy
+  - id: "{{ .ProjectName }}_darwin-amd64"
+    binary: "{{ .ProjectName }}"
+    main: ./cmd/{{ .ProjectName }}
     goarch:
       - amd64
     goos:
@@ -21,13 +22,13 @@ builds:
       - CXX=o64-clang++
     flags:
       - -trimpath
-      - -pgo=default.pgo
+      - -pgo={{ .Env.PGO_FILE }}
     ldflags:
-      - -s -w -X github.com/kitabisa/teler-proxy/common.Version={{ .Version }}
+      - -s -w -X github.com/kitabisa/{{ .ProjectName }}/common.Version={{ .Version }}
 
-  - id: teler-proxy_darwin-arm64
-    binary: teler-proxy
-    main: ./cmd/teler-proxy
+  - id: "{{ .ProjectName }}_darwin-arm64"
+    binary: "{{ .ProjectName }}"
+    main: ./cmd/{{ .ProjectName }}
     goarch:
       - arm64
     goos:
@@ -37,13 +38,13 @@ builds:
       - CXX=oa64-clang++
     flags:
       - -trimpath
-      - -pgo=default.pgo
+      - -pgo={{ .Env.PGO_FILE }}
     ldflags:
-      - -s -w -X github.com/kitabisa/teler-proxy/common.Version={{ .Version }}
+      - -s -w -X github.com/kitabisa/{{ .ProjectName }}/common.Version={{ .Version }}
 
-  - id: teler-proxy_linux-amd64
-    binary: teler-proxy
-    main: ./cmd/teler-proxy
+  - id: "{{ .ProjectName }}_linux-amd64"
+    binary: "{{ .ProjectName }}"
+    main: ./cmd/{{ .ProjectName }}
     env:
       - CC=x86_64-linux-gnu-gcc
       - CXX=x86_64-linux-gnu-g++
@@ -53,13 +54,13 @@ builds:
       - linux
     flags:
       - -trimpath
-      - -pgo=default.pgo
+      - -pgo={{ .Env.PGO_FILE }}
     ldflags:
-      - -s -w -X github.com/kitabisa/teler-proxy/common.Version={{ .Version }}
+      - -s -w -X github.com/kitabisa/{{ .ProjectName }}/common.Version={{ .Version }}
 
-  - id: teler-proxy_linux-arm64
-    binary: teler-proxy
-    main: ./cmd/teler-proxy
+  - id: "{{ .ProjectName }}_linux-arm64"
+    binary: "{{ .ProjectName }}"
+    main: ./cmd/{{ .ProjectName }}
     goarch:
       - arm64
     goos:
@@ -69,13 +70,13 @@ builds:
       - CXX=aarch64-linux-gnu-g++
     flags:
       - -trimpath
-      - -pgo=default.pgo
+      - -pgo={{ .Env.PGO_FILE }}
     ldflags:
-      - -s -w -X github.com/kitabisa/teler-proxy/common.Version={{ .Version }}
+      - -s -w -X github.com/kitabisa/{{ .ProjectName }}/common.Version={{ .Version }}
 
-  - id: teler-proxy_windows-amd64
-    binary: teler-proxy
-    main: ./cmd/teler-proxy
+  - id: "{{ .ProjectName }}_windows-amd64"
+    binary: "{{ .ProjectName }}"
+    main: ./cmd/{{ .ProjectName }}
     goarch:
       - amd64
     goos:
@@ -85,27 +86,20 @@ builds:
       - CXX=x86_64-w64-mingw32-g++
     flags:
       - -trimpath
-      - -pgo=default.pgo
+      - -pgo={{ .Env.PGO_FILE }}
       - -buildmode=exe
     ldflags:
-      - -s -w -X github.com/kitabisa/teler-proxy/common.Version={{ .Version }}
-
-universal_binaries:
-  - id: teler-proxy_darwin-universal
-    ids:
-      - teler-proxy_darwin-amd64
-      - teler-proxy_darwin-arm64
-    replace: true
-    name_template: "teler-proxy"
+      - -s -w -X github.com/kitabisa/{{ .ProjectName }}/common.Version={{ .Version }}
 
 archives:
   - id: build
     builds:
-      - teler-proxy_darwin-universal
-      - teler-proxy_linux-amd64
-      - teler-proxy_linux-arm64
-      - teler-proxy_windows-amd64
-    name_template: "teler-proxy_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+      - "{{ .ProjectName }}_darwin-amd64"
+      - "{{ .ProjectName }}_darwin-arm64"
+      - "{{ .ProjectName }}_linux-amd64"
+      - "{{ .ProjectName }}_linux-arm64"
+      - "{{ .ProjectName }}_windows-amd64"
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
     wrap_in_directory: false
     files:
       - "LICENSE*"
@@ -120,3 +114,23 @@ snapshot:
   name_template: "{{ incpatch .Version }}-next"
 changelog:
   sort: asc
+
+dockers:
+  - image_templates:
+      - "ghcr.io/kitabisa/{{ .ProjectName }}:{{ .Tag }}"
+      - "ghcr.io/kitabisa/{{ .ProjectName }}:v{{ .Major }}.{{ .Minor }}"
+      - "ghcr.io/kitabisa/{{ .ProjectName }}:v{{ .Major }}"
+      - "ghcr.io/kitabisa/{{ .ProjectName }}:latest"
+    dockerfile: Dockerfile.goreleaser
+    use: docker
+    build_flag_templates:
+      - "--pull"
+      - "--label=org.opencontainers.image.authors=\"Dwi Siswanto <me@dw1.io>\""
+      - "--label=org.opencontainers.image.created={{ .Date }}"
+      - "--label=org.opencontainers.image.description=\"teler Proxy enabling seamless integration with teler WAF to protect locally running web service against a variety of web-based attacks\""
+      - "--label=org.opencontainers.image.licenses=Apache-2.0"
+      - "--label=org.opencontainers.image.ref.name={{ .Tag }}"
+      - "--label=org.opencontainers.image.revision={{ .FullCommit }}"
+      - "--label=org.opencontainers.image.title={{ .ProjectName }}"
+      - "--label=org.opencontainers.image.url=https://github.com/kitabisa/{{ .ProjectName }}"
+      - "--label=org.opencontainers.image.version={{ .Version }}"

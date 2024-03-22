@@ -1,0 +1,5 @@
+FROM scratch
+
+COPY teler-proxy /teler-proxy
+
+ENTRYPOINT ["/teler-proxy"]
