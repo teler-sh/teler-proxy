@@ -82,7 +82,7 @@ Simply, download a pre-built binary from [releases page](https://github.com/kita
 
 * **gcc** (GNU Compiler Collection) should be installed & configured to compile teler-waf.
 
-Using [Go](https://golang.org/doc/install) (v1.19+) compiler:
+Using [Go](https://golang.org/doc/install) (v1.20+) compiler:
 
 ```bash
 CGO_ENABLED=1 go install github.com/kitabisa/teler-proxy/cmd/teler-proxy@latest
