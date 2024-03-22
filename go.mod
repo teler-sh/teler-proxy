@@ -1,6 +1,6 @@
 module github.com/kitabisa/teler-proxy
 
-go 1.19
+go 1.20
 
 require (
 	github.com/charmbracelet/lipgloss v0.9.1
