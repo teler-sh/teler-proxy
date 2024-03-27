@@ -43,15 +43,10 @@ func (w *logWriter) write(d data) error {
 	switch level := d["level"].(string); level {
 	case "debug":
 		w.writeDebug(d)
-	case "info":
-		w.writeInfo(d)
+	// case "info":
+	// 	w.writeInfo(d)
 	case "warn":
-		r, err := json.Marshal(d["request"])
-		if err != nil {
-			return err
-		}
-
-		w.writeWarn(d, r)
+		w.writeWarn(d)
 	case "error":
 		w.writeError(d)
 	case "fatal":
@@ -66,19 +61,33 @@ func (w *logWriter) writeDebug(d data) {
 }
 
 func (w *logWriter) writeInfo(d data) {
-	if opt, ok := d["options"].(data); ok {
-		w.Info(d["msg"],
-			"options", opt,
-		)
-	}
+	// if opt, ok := d["options"].(data); ok {
+	// 	o, err := json.Marshal(opt)
+	// 	if err != nil {
+	// 		return
+	// 	}
+
+	// 	w.Info(d["msg"], "options", string(o))
+	// } else {
+	w.Info(d["msg"])
+	// }
 }
 
-func (w *logWriter) writeWarn(d data, r []byte) {
-	w.Warn(d["msg"],
-		"id", d["id"],
-		"threat", d["category"],
-		"request", string(r),
-	)
+func (w *logWriter) writeWarn(d data) {
+	if req, ok := d["request"].(data); ok {
+		r, err := json.Marshal(req)
+		if err != nil {
+			return
+		}
+
+		w.Warn(d["msg"],
+			"id", d["id"],
+			"threat", d["category"],
+			"request", string(r),
+		)
+	} else {
+		w.Warn(d["msg"])
+	}
 }
 
 func (w *logWriter) writeError(d data) {
