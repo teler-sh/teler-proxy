@@ -15,7 +15,7 @@ type logWriter struct {
 	*log.Logger
 }
 
-type data map[string]any
+type data = map[string]any
 
 func New() *logWriter {
 	w := new(logWriter)
