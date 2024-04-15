@@ -46,7 +46,7 @@ jobs:
             steps.is-ready.outcome == 'success' ||
             steps.is-dependabot.outcome == 'success'
           )
-        uses: pascalgn/automerge-action@v0.16.2
+        uses: pascalgn/automerge-action@v0.16.3
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
           MERGE_LABELS: ""
