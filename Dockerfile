@@ -1,7 +1,7 @@
 FROM golang:alpine
 
 ARG VERSION="docker"
-ARG LDFLAGS="-s -w -X github.com/kitabisa/teler-proxy/common.Version=${VERSION}"
+ARG LDFLAGS="-s -w -X github.com/teler-sh/teler-proxy/common.Version=${VERSION}"
 ARG PGO_FILE="default.pgo"
 
 LABEL org.opencontainers.image.authors="Dwi Siswanto <me@dw1.io>"
@@ -9,7 +9,7 @@ LABEL org.opencontainers.image.description="teler Proxy enabling seamless integr
 LABEL org.opencontainers.image.licenses="Apache-2.0"
 LABEL org.opencontainers.image.ref.name="${VERSION}"
 LABEL org.opencontainers.image.title="teler-proxy"
-LABEL org.opencontainers.image.url="https://github.com/kitabisa/teler-proxy"
+LABEL org.opencontainers.image.url="https://github.com/teler-sh/teler-proxy"
 LABEL org.opencontainers.image.version="${VERSION}"
 
 WORKDIR /app

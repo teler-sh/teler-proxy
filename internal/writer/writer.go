@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 
 	"github.com/charmbracelet/log"
-	"github.com/kitabisa/teler-proxy/internal/logger"
+	"github.com/teler-sh/teler-proxy/internal/logger"
 )
 
 type Writer interface {

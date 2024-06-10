@@ -3,7 +3,7 @@ package cron
 import (
 	"os"
 
-	"github.com/kitabisa/teler-waf/threat"
+	"github.com/teler-sh/teler-waf/threat"
 )
 
 var task = func() error {

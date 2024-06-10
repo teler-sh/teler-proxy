@@ -13,11 +13,11 @@ import (
 
 	"github.com/charmbracelet/log"
 	"github.com/fsnotify/fsnotify"
-	"github.com/kitabisa/teler-proxy/common"
-	"github.com/kitabisa/teler-proxy/internal/cron"
-	"github.com/kitabisa/teler-proxy/internal/writer"
-	"github.com/kitabisa/teler-waf"
-	"github.com/kitabisa/teler-waf/threat"
+	"github.com/teler-sh/teler-proxy/common"
+	"github.com/teler-sh/teler-proxy/internal/cron"
+	"github.com/teler-sh/teler-proxy/internal/writer"
+	"github.com/teler-sh/teler-waf"
+	"github.com/teler-sh/teler-waf/threat"
 )
 
 type Runner struct {

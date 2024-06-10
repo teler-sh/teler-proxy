@@ -8,7 +8,7 @@ labels: 'documentation'
 <!--
   To make it easier for us to help you, please include as much useful information as possible.
 
-  Before opening a new issue, please search existing issues https://github.com/kitabisa/teler-proxy/issues
+  Before opening a new issue, please search existing issues https://github.com/teler-sh/teler-proxy/issues
 -->
 
 ## Summary

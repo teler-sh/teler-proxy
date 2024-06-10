@@ -24,7 +24,7 @@ builds:
       - -trimpath
       - -pgo={{ .Env.PGO_FILE }}
     ldflags:
-      - -s -w -X github.com/kitabisa/{{ .ProjectName }}/common.Version={{ .Version }}
+      - -s -w -X github.com/teler-sh/{{ .ProjectName }}/common.Version={{ .Version }}
 
   - id: "{{ .ProjectName }}_darwin-arm64"
     binary: "{{ .ProjectName }}"
@@ -40,7 +40,7 @@ builds:
       - -trimpath
       - -pgo={{ .Env.PGO_FILE }}
     ldflags:
-      - -s -w -X github.com/kitabisa/{{ .ProjectName }}/common.Version={{ .Version }}
+      - -s -w -X github.com/teler-sh/{{ .ProjectName }}/common.Version={{ .Version }}
 
   - id: "{{ .ProjectName }}_linux-amd64"
     binary: "{{ .ProjectName }}"
@@ -56,7 +56,7 @@ builds:
       - -trimpath
       - -pgo={{ .Env.PGO_FILE }}
     ldflags:
-      - -s -w -X github.com/kitabisa/{{ .ProjectName }}/common.Version={{ .Version }}
+      - -s -w -X github.com/teler-sh/{{ .ProjectName }}/common.Version={{ .Version }}
 
   - id: "{{ .ProjectName }}_linux-arm64"
     binary: "{{ .ProjectName }}"
@@ -72,7 +72,7 @@ builds:
       - -trimpath
       - -pgo={{ .Env.PGO_FILE }}
     ldflags:
-      - -s -w -X github.com/kitabisa/{{ .ProjectName }}/common.Version={{ .Version }}
+      - -s -w -X github.com/teler-sh/{{ .ProjectName }}/common.Version={{ .Version }}
 
   - id: "{{ .ProjectName }}_windows-amd64"
     binary: "{{ .ProjectName }}"
@@ -89,7 +89,7 @@ builds:
       - -pgo={{ .Env.PGO_FILE }}
       - -buildmode=exe
     ldflags:
-      - -s -w -X github.com/kitabisa/{{ .ProjectName }}/common.Version={{ .Version }}
+      - -s -w -X github.com/teler-sh/{{ .ProjectName }}/common.Version={{ .Version }}
 
 archives:
   - id: build
@@ -117,10 +117,10 @@ changelog:
 
 dockers:
   - image_templates:
-      - "ghcr.io/kitabisa/{{ .ProjectName }}:{{ .Tag }}"
-      - "ghcr.io/kitabisa/{{ .ProjectName }}:v{{ .Major }}.{{ .Minor }}"
-      - "ghcr.io/kitabisa/{{ .ProjectName }}:v{{ .Major }}"
-      - "ghcr.io/kitabisa/{{ .ProjectName }}:latest"
+      - "ghcr.io/teler-sh/{{ .ProjectName }}:{{ .Tag }}"
+      - "ghcr.io/teler-sh/{{ .ProjectName }}:v{{ .Major }}.{{ .Minor }}"
+      - "ghcr.io/teler-sh/{{ .ProjectName }}:v{{ .Major }}"
+      - "ghcr.io/teler-sh/{{ .ProjectName }}:latest"
     dockerfile: Dockerfile.goreleaser
     use: docker
     build_flag_templates:
@@ -132,5 +132,5 @@ dockers:
       - "--label=org.opencontainers.image.ref.name={{ .Tag }}"
       - "--label=org.opencontainers.image.revision={{ .FullCommit }}"
       - "--label=org.opencontainers.image.title={{ .ProjectName }}"
-      - "--label=org.opencontainers.image.url=https://github.com/kitabisa/{{ .ProjectName }}"
+      - "--label=org.opencontainers.image.url=https://github.com/teler-sh/{{ .ProjectName }}"
       - "--label=org.opencontainers.image.version={{ .Version }}"
