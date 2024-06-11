@@ -54,4 +54,6 @@ clean:
 
 teler-proxy: build
 
+ci: vet build clean
+
 all: test report build
