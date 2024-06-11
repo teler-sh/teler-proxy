@@ -12,6 +12,11 @@ on:
 
 env:
   PGO_FILE: "default.pgo"
+  COSIGN_KEY_PREFIX: release-${{ github.event.repository.name }}_${{ github.ref_name }}
+
+permissions:
+  contents: write
+  packages: write
 
 jobs:
   release:
@@ -19,13 +24,15 @@ jobs:
     container:
       image: ghcr.io/goreleaser/goreleaser-cross:latest
     steps:
+      # Downloading PGO file
+
       - uses: actions/download-artifact@v4
         id: artifact
         with:
           name: pgo
         continue-on-error: true
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         if: steps.artifact.outcome != 'success'
         with:
           ref: pgo
@@ -33,22 +40,23 @@ jobs:
       - run: cp ${{ env.PGO_FILE }} /tmp
         if: steps.artifact.outcome != 'success'
 
-      - uses: actions/checkout@v3
+      # Releasing
+
+      - uses: actions/checkout@v4
         with:
           ref: "${{ inputs.tag || github.ref_name }}"
 
       - run: cp /tmp/${{ env.PGO_FILE }} .
         if: steps.artifact.outcome != 'success'
 
-      - uses: actions/setup-go@v5
-        with:
-          go-version-file: 'go.mod'
-          cache-dependency-path: '**/go.sum'
+      - uses: teler-sh/actions/setup-go@v1
 
       - name: Build PGO file
         run: '[ -f "${{ env.PGO_FILE }}" ] || make pgo'
 
       - run: git config --global --add safe.directory "$(pwd)"
+
+      - uses: anchore/sbom-action/download-syft@v0
 
       - uses: docker/login-action@v3
         with:
@@ -56,6 +64,11 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - run: goreleaser release --clean
+      - uses: teler-sh/actions/cosign/generate@v1
+        with:
+          password: ${{ secrets.COSIGN_PASSWORD }}
+          key-prefix: ${{ env.COSIGN_KEY_PREFIX }}
+
+      - run: goreleaser release --clean --skip validate
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
