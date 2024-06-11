@@ -26,9 +26,9 @@ import (
 	"net/http/httputil"
 	"net/url"
 
-	"github.com/kitabisa/teler-proxy/common"
-	"github.com/kitabisa/teler-waf"
-	"github.com/kitabisa/teler-waf/option"
+	"github.com/teler-sh/teler-proxy/common"
+	"github.com/teler-sh/teler-waf"
+	"github.com/teler-sh/teler-waf/option"
 )
 
 type Tunnel struct {

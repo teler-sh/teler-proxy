@@ -1,6 +1,6 @@
 package main
 
-import "github.com/kitabisa/teler-proxy/internal/runner"
+import "github.com/teler-sh/teler-proxy/internal/runner"
 
 func main() {
 	opt := runner.ParseOptions()

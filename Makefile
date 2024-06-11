@@ -1,10 +1,16 @@
 APP_NAME = teler-proxy
 VERSION  = $(shell git describe --always --tags)
 
-GO_LDFLAGS = "-s -w -X 'github.com/kitabisa/teler-proxy/common.Version=${VERSION}'"
+GO_MOD_VERSION := $(shell grep -Po '^go \K([0-9]+\.[0-9]+(\.[0-9]+)?)$$' go.mod)
+GO := go${GO_MOD_VERSION}
+GO_LDFLAGS = "-s -w -X 'github.com/teler-sh/teler-proxy/common.Version=${VERSION}'"
+
+ifeq ($(shell which ${GO}),)
+	GO = go
+endif
 
 vet:
-	go vet ./...
+	$(GO) vet ./...
 
 lint:
 	golangci-lint run --tests=false ./...
@@ -13,13 +19,13 @@ semgrep:
 	semgrep --config auto
 
 bench:
-	go test ./pkg/tunnel/... -run "^$$" -bench . -cpu 4 -benchmem $(ARGS)
+	$(GO) test ./pkg/tunnel/... -run "^$$" -bench . -cpu 4 -benchmem $(ARGS)
 
 cover: FILE := /tmp/teler-coverage.out # Define coverage file
 cover: PKG := ./pkg/tunnel/...
 cover:
-	go test -race -coverprofile=$(FILE) -covermode=atomic $(PKG)
-	go tool cover -func=$(FILE)
+	$(GO) test -race -coverprofile=$(FILE) -covermode=atomic $(PKG)
+	$(GO) tool cover -func=$(FILE)
 
 pprof: ARGS := -cpuprofile=cpu.out -memprofile=mem.out -benchtime 30s
 pprof: bench
@@ -29,7 +35,7 @@ pgo:
 	cp cpu.out default.pgo
 
 test:
-	go test -race -v ./pkg/tunnel/...
+	$(GO) test -race -v ./pkg/tunnel/...
 
 test-all: test vet lint semgrep
 

@@ -4,8 +4,8 @@ import (
 	"flag"
 	"os"
 
-	"github.com/kitabisa/teler-proxy/common"
-	"github.com/kitabisa/teler-proxy/internal/logger"
+	"github.com/teler-sh/teler-proxy/common"
+	"github.com/teler-sh/teler-proxy/internal/logger"
 )
 
 func ParseOptions() *common.Options {

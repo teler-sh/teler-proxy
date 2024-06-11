@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 
 	"github.com/charmbracelet/log"
-	"github.com/kitabisa/teler-proxy/internal/logger"
+	"github.com/teler-sh/teler-proxy/internal/logger"
 )
 
 type Writer interface {
@@ -60,18 +60,18 @@ func (w *logWriter) writeDebug(d data) {
 	w.Debug(d["msg"])
 }
 
-func (w *logWriter) writeInfo(d data) {
-	// if opt, ok := d["options"].(data); ok {
-	// 	o, err := json.Marshal(opt)
-	// 	if err != nil {
-	// 		return
-	// 	}
+// func (w *logWriter) writeInfo(d data) {
+// 	// if opt, ok := d["options"].(data); ok {
+// 	// 	o, err := json.Marshal(opt)
+// 	// 	if err != nil {
+// 	// 		return
+// 	// 	}
 
-	// 	w.Info(d["msg"], "options", string(o))
-	// } else {
-	w.Info(d["msg"])
-	// }
-}
+// 	// 	w.Info(d["msg"], "options", string(o))
+// 	// } else {
+// 	w.Info(d["msg"])
+// 	// }
+// }
 
 func (w *logWriter) writeWarn(d data) {
 	if req, ok := d["request"].(data); ok {

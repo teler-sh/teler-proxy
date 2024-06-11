@@ -9,7 +9,7 @@ import (
 
 	"net/url"
 
-	"github.com/kitabisa/teler-proxy/pkg/tunnel"
+	"github.com/teler-sh/teler-proxy/pkg/tunnel"
 )
 
 func parseURL(dest string) (*url.URL, error) {
