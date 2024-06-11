@@ -71,4 +71,5 @@ jobs:
 
       - run: goreleaser release --clean --skip validate
         env:
+          COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
