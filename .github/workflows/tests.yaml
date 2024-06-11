@@ -30,9 +30,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: teler-sh/actions/setup-go@v1
-        with:
-          go-version-file: 'go.mod'
-          cache-dependency-path: '**/go.sum'
       - uses: teler-sh/actions/resources@v1
       - run: make ci
         if: (github.event_name != 'workflow_dispatch')
