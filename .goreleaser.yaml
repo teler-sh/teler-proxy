@@ -200,7 +200,7 @@ release:
     ```bash
     cosign verify-blob --key release-{{ .ProjectName }}_{{ .Tag }}.pub --signature {{ .ProjectName }}_{{ .Tag }}-OS_ARCH.sig {{ .ProjectName }}_{{ .Tag }}-OS_ARCH
     ```
-  name_template: "{{ .ProjectName }}-{{ .Tag }}"
+  name_template: "{{ .Tag }}"
   extra_files:
     - glob: "{{ .Env.COSIGN_KEY_PREFIX }}.pub"
     - glob: "teler-waf.conf.example.*"
