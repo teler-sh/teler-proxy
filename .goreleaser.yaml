@@ -7,9 +7,6 @@ before:
     - go mod tidy
     - go mod verify
 
-release:
-  prerelease: auto
-
 builds:
   - id: "darwin-amd64"
     binary: "{{ .ProjectName }}"
