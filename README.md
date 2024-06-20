@@ -13,6 +13,7 @@ teler Proxy enabling seamless integration with [teler WAF](https://github.com/te
 
 * [teler-sh/teler](https://github.com/teler-sh/teler): Real-time HTTP Intrusion Detection.
 * [teler-sh/teler-waf](https://github.com/teler-sh/teler-waf): Go HTTP middleware that provides teler IDS functionality.
+* [teler-sh/teler-caddy](https://github.com/teler-sh/teler-caddy): teler Caddy integrates the powerful security features of teler WAF into the Caddy web server
 
 https://github.com/teler-sh/teler-proxy/assets/25837540/df36af09-080a-4cff-98d8-fd2071f602fa
 
@@ -272,7 +273,7 @@ To experience the power of the teler WAF Proxy in action, simply follow these st
 
 ## Community
 
-We use the Google Groups as our dedicated mailing list. Subscribe to [teler-announce](https://groups.google.com/g/teler-announce) via [teler-announce+subscribe@googlegroups.com](mailto:teler-announce+subscribe@googlegroups.com) for important announcements, such as the availability of new releases. This subscription will keep you informed about significant developments related to [teler IDS](https://github.com/teler-sh/teler), [teler WAF](https://github.com/teler-sh/teler-waf), [teler Proxy](https://github.com/teler-sh/teler-proxy), and [teler Resources](https://github.com/teler-sh/teler-resources).
+We use the Google Groups as our dedicated mailing list. Subscribe to [teler-announce](https://groups.google.com/g/teler-announce) via [teler-announce+subscribe@googlegroups.com](mailto:teler-announce+subscribe@googlegroups.com) for important announcements, such as the availability of new releases. This subscription will keep you informed about significant developments related to [teler IDS](https://github.com/teler-sh/teler), [teler WAF](https://github.com/teler-sh/teler-waf), [teler Proxy](https://github.com/teler-sh/teler-proxy), [teler Caddy](https://github.com/teler-sh/teler-caddy) and [teler Resources](https://github.com/teler-sh/teler-resources).
 
 For any [inquiries](https://github.com/teler-sh/teler-proxy/discussions/categories/q-a), [discussions](https://github.com/teler-sh/teler-proxy/discussions), or [issues](https://github.com/teler-sh/teler-proxy/issues) are being tracked here on GitHub. This is where we actively manage and address these aspects of our community engagement.
 
